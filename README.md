@@ -3,9 +3,11 @@ The Python Task Analysis Environmental Modeling and Simulation (pytaems) is the 
 This is a visual tool to edit inputs / view taems networks.
 
 # Use
+[Click here to try out the side!](https://boardkeystown.github.io/pytames_edit/src/)
 
-mind the bugs this is still under development.
+No need for local host or node. Source is eternally client side in the browser. 
 
+Do mind the bugs this is still under development.
 
 # Sources
 tba
