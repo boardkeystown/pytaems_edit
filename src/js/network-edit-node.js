@@ -9,6 +9,17 @@ function editNodeBtn() {
     const current_node_properties = nodes.get(current_node);
     editNodeProperties_name.value = current_node_properties.id;
     editNodeProperties_type.value = current_node_properties.obj.type;
+
+    //set up properties
+    switch (editNodeProperties_type.value) {
+        case node_types.task_group:
+            const propertiesDiv = $("#edit-node-type-properties");
+            propertiesDiv.empty();
+            propertiesDiv.append(mk_agent_dialog_properties());
+        default:
+            break;
+    }
+
 }
 
 const editNodeProperties = document.getElementById("edit-node-dialog-input-form");
@@ -62,4 +73,16 @@ $(function () {
     $("#close-edit-node-dialog").on("click", (e) => {
         $("#edit-node-dialog").toggle();
     });
+
+    $("#edit_node_type").on('change',(e) => {
+        const propertiesDiv = $("#edit-node-type-properties");
+        propertiesDiv.empty();
+        let selectedType = $("#edit_node_type option:selected").val();
+        // console.log("Selected type:", selectedType);
+        if (selectedType === node_types.task_group) {
+            propertiesDiv.append(mk_agent_dialog_properties());
+        }
+    });
+
+
 })

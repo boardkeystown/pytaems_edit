@@ -53,7 +53,6 @@ function mk_edges_into_dropdown_options(available_edge) {
 }
 
 
-
 /**
  * @param dialog_id_name_str "#id-name"
  * @param top_px_str         "123px"
@@ -66,3 +65,55 @@ function show_dialog_at(dialog_id_name_str,top_px_str,left_px_str) {
     dialog.css('top', top_px_str);
     dialog.css('left', left_px_str);
 }
+
+
+function mk_qaf_drop_down_options() {
+    return `
+    <label> qaf: </label>
+    <select id="qaf_selection" name="qaf_type">
+        <option value="q_max" name="q_max"> q_max </option>
+        <option value="q_min" name="q_min"> q_min </option>
+        <option value="q_sum" name="q_sum"> q_sum </option>
+        <option value="q_sum_all" name="q_sum_all"> q_sum_all </option>
+        <option value="seq_min" name="seq_min"> seq_min </option>
+        <option value="seq_max" name="seq_max"> seq_max </option>
+        <option value="seq_sum" name="seq_sum"> seq_sum </option>
+        <option value="seq_last" name="seq_last"> seq_last </option>
+        <option value="q_exactly_one" name="q_exactly_one"> q_exactly_one </option>
+        <option value="q_last" name="q_last"> q_last </option>
+        <option value="q_sigmoid" name="q_sigmoid"> q_sigmoid </option>
+    </select>
+    `
+}
+
+function mk_agent_dialog_properties() {
+    return `
+            <label> Agent: </label>
+            <input type="text" name="agent">
+            <br>
+           ` + mk_qaf_drop_down_options() + `
+            <br>
+            <label> Arrival Time: </label>
+            <input type="number" name="arrival_time">
+            <br>
+            <label> Earliset Start Time: </label>
+            <input type="number" name="earliest_start_time">
+            <br>
+            <label> Deadline: </label>
+            <input type="number" name="deadline">
+            `
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
