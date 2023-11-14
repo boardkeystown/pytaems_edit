@@ -41,6 +41,19 @@ function add_available_nodes_to_selection_drop_down(
     console.log(default_selection)
 }
 
+function mk_edges_into_dropdown_options(available_edge) {
+    const edges_array = available_edge.get();
+    let options = edges_array.map(edge => {
+        return {
+            value: edge.id,
+            text: `from ${edge.from} to ${edge.to}`
+        }
+    });
+    return options;
+}
+
+
+
 /**
  * @param dialog_id_name_str "#id-name"
  * @param top_px_str         "123px"

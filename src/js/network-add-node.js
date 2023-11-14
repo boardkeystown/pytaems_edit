@@ -1,7 +1,7 @@
 
 function addNodeBtn() {
     console.log(`the current node is ${current_node}`)
-    contextMenu.style.display = 'none';
+    nodeContextMenu.style.display = 'none';
     show_dialog_at("#add-node-dialog",
                     current_mouse_network_pos.top,
                     current_mouse_network_pos.left);

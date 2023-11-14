@@ -1,4 +1,5 @@
 let current_node = null;
+let current_edge = null;
 const current_mouse_network_pos = {
     top: 0 + 'px', left: 0 + 'px'
 };
@@ -65,13 +66,25 @@ function startNetwork(data) {
         if (params.nodes.length > 0) {
             const nodeId = params.nodes[0];
             current_node = nodeId;
-            const networkRect = container.getBoundingClientRect();
             console.log("Right-clicked on node:", nodeId);
             // figure out where in the network out mouse is and save it
+            const networkRect = container.getBoundingClientRect();
             current_mouse_network_pos.top = (networkRect.top + window.scrollY + params.pointer.DOM.y) + 'px';
             current_mouse_network_pos.left = (networkRect.left + window.scrollX + params.pointer.DOM.x) + 'px';
             // show the context menu
-            show_context_menu_at(current_mouse_network_pos.top, current_mouse_network_pos.left);
+            show_node_context_menu_at(current_mouse_network_pos.top, current_mouse_network_pos.left);
+        } else if (params.edges.length > 0) {
+            const edgeId = params.edges[0]; // Get the first edge's ID
+            // const edgeData = edges.get(edgeId);
+            // console.log("Right-clicked on edge:", edgeData);
+            console.log("Right-clicked on edge:", edgeId);
+            current_edge = edgeId
+            // figure out where in the network out mouse is and save it
+            const networkRect = container.getBoundingClientRect();
+            current_mouse_network_pos.top = (networkRect.top + window.scrollY + params.pointer.DOM.y) + 'px';
+            current_mouse_network_pos.left = (networkRect.left + window.scrollX + params.pointer.DOM.x) + 'px';
+            // show the context menu
+            show_edge_context_menu_at(current_mouse_network_pos.top, current_mouse_network_pos.left);
         }
     })
 }

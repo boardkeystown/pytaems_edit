@@ -1,5 +1,5 @@
 function connectNodeBtn() {
-    contextMenu.style.display = 'none';
+    nodeContextMenu.style.display = 'none';
     show_dialog_at("#connect-node-dialog",
                     current_mouse_network_pos.top,
                     current_mouse_network_pos.left);
