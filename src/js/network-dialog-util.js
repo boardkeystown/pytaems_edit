@@ -83,10 +83,10 @@ function mk_qaf_drop_down_options() {
         <option value="q_last" name="q_last"> q_last </option>
         <option value="q_sigmoid" name="q_sigmoid"> q_sigmoid </option>
     </select>
-    `
+    `;
 }
 
-function mk_agent_dialog_properties() {
+function mk_task_group_dialog_properties() {
     return `
             <label> Agent: </label>
             <input type="text" name="agent">
@@ -101,8 +101,145 @@ function mk_agent_dialog_properties() {
             <br>
             <label> Deadline: </label>
             <input type="number" name="deadline">
-            `
+            `;
 }
+
+
+function mk_task_dialog_properties() {
+    return `
+            <label> Agent: </label>
+            <input type="text" name="agent">
+            <br>
+           ` + mk_qaf_drop_down_options() + `
+            <br>
+            <label> Arrival Time: </label>
+            <input type="number" name="arrival_time">
+            <br>
+            <label> Earliset Start Time: </label>
+            <input type="number" name="earliest_start_time">
+            <br>
+            <label> Deadline: </label>
+            <input type="number" name="deadline">
+            `;
+}
+
+function mk_method_dialog_properties() {
+    return `
+            <label> Agent: </label>
+            <input type="text" name="agent">
+            <br>
+           ` + mk_qaf_drop_down_options() + `
+            <br>
+            <label> Arrival Time: </label>
+            <input type="number" name="arrival_time">
+            <br>
+            <label> Earliset Start Time: </label>
+            <input type="number" name="earliest_start_time">
+            <br>
+            <label> Deadline: </label>
+            <input type="number" name="deadline">
+            <br>
+            <label> Start Time: </label>
+            <input type="number" name="start_time">
+            <br>
+            <label> Finish Time: </label>
+            <input type="number" name="finish_time">
+            <br>
+            <label> Accrued Time: </label>
+            <input type="number" name="accrued_time">
+            <br>
+            <label> Nonlocal Flag: </label>
+            <input type="number" name="nonlocal_flag">
+            `;
+}
+function mk_consumable_resource_dialog_properties() {
+    return `
+            <label> Agent: </label>
+            <input type="text" name="agent">
+            <br>
+           ` + mk_qaf_drop_down_options() + `
+            <br>
+            <label> Arrival Time: </label>
+            <input type="number" name="arrival_time">
+            <br>
+            <label> State: </label>
+            <input type="number" name="state">
+            <br>
+            <label> Depleted At: </label>
+            <input type="number" name="depleted_at">
+            <br>
+            <label> Overloaded At: </label>
+            <input type="number" name="overloaded_at">        
+            `;
+}
+
+function mk_none_consumable_resource_dialog_properties() {
+    return `
+            <label> Agent: </label>
+            <input type="text" name="agent">
+            <br>
+           ` + mk_qaf_drop_down_options() + `
+            <br>
+            <label> Arrival Time: </label>
+            <input type="number" name="arrival_time">
+            <br>
+            <label> State: </label>
+            <input type="number" name="state">
+            <br>
+            <label> Depleted At: </label>
+            <input type="number" name="depleted_at">
+            <br>
+            <label> Overloaded At: </label>
+            <input type="number" name="overloaded_at">        
+            `;
+}
+
+/**
+ *
+ * @param form_dialog_id_str "#id-name"
+ * @param selected_type_str   a node_type str
+ */
+function build_node_type_properties_dialog(
+    form_dialog_id_str,
+    selected_type_str
+) {
+    // get and empty out the properties dialog
+    const propertiesDiv = $(form_dialog_id_str);
+    propertiesDiv.empty();
+    // base on selected type append the dialogs
+    //TODO: get the current values of the node
+    // if it is a new node we do not care since it
+    // should be default blank
+    switch (selected_type_str) {
+        case node_types.task_group:
+            propertiesDiv.append(mk_task_group_dialog_properties());
+            break;
+        case node_types.task:
+            propertiesDiv.append(mk_task_dialog_properties());
+            break;
+        case node_types.method:
+            propertiesDiv.append(mk_method_dialog_properties());
+            break;
+        case node_types.consumable_resource:
+            propertiesDiv.append(mk_consumable_resource_dialog_properties());
+            break;
+        case node_types.none_consumable_resource:
+            propertiesDiv.append(mk_none_consumable_resource_dialog_properties());
+            break;
+        default:
+            console.log(`${selected_type_str} is not a know node_type!`);
+            break;
+    }
+
+
+
+
+}
+
+
+
+
+
 
 
 

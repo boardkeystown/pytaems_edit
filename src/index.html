@@ -26,6 +26,7 @@
     <script defer src="js/network-edge-context-menu.js" type="text/javascript"></script>
     <script defer src="js/network-connect-node.js" type="text/javascript"></script>
     <script defer src="js/network-remove-edge.js" type="text/javascript"></script>
+    <script defer src="js/network-edit-edge.js" type="text/javascript"></script>
 </head>
 <body>
 
@@ -50,6 +51,7 @@
 
 <div id="edge-context-menu" class="context-menu">
     <ul class="context-menu-ul">
+        <li class="context-menu-li" onclick="editEdgeBtn()"> Edit Edge...</li>
         <li class="context-menu-li" onclick="removeEdgeBtn()"> Remove Edge...</li>
     </ul>
 </div>
@@ -162,8 +164,8 @@
                 <!-- filled from java script-->
             </select>
             <select id="connect_node_relation" , name="connect_node_relation">
-                <option value="from" , name="from"> from</option>
                 <option value="to" , name="to"> to</option>
+                <option value="from" , name="from"> from</option>
             </select>
             <label for="connect_available_nodes_right">Name: </label>
             <select id="connect_available_nodes_right" name="connect_available_nodes_right">
@@ -176,7 +178,7 @@
 </div>
 
 
-<!-- remove edite dialog -->
+<!-- remove edge dialog -->
 
 <div id="remove-edge-dialog" class="node-dialog">
     <div class="node-dialog-header">
@@ -197,6 +199,31 @@
         </form>
     </div>
 </div>
+
+<!-- edit edge dialog -->
+
+<div id="edit-edge-dialog" class="node-dialog">
+    <div class="node-dialog-header">
+        <h4> Edit Edge </h4>
+        <button id="close-edit-edge-dialog">X</button>
+    </div>
+    <div class="node-dialog-content">
+        <form id="eidt-edge-dialog-input-form"
+              onsubmit=""
+              autocomplete="off">
+            <label for="edit_edge_available">Edge: </label>
+            <select id="edit_edge_available" name="edit_edge_available">
+                <!-- filled from java script-->
+            </select>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+
+
+
+
 
 
 </body>

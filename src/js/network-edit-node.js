@@ -11,14 +11,11 @@ function editNodeBtn() {
     editNodeProperties_type.value = current_node_properties.obj.type;
 
     //set up properties
-    switch (editNodeProperties_type.value) {
-        case node_types.task_group:
-            const propertiesDiv = $("#edit-node-type-properties");
-            propertiesDiv.empty();
-            propertiesDiv.append(mk_agent_dialog_properties());
-        default:
-            break;
-    }
+    build_node_type_properties_dialog(
+        "#edit-node-type-properties",
+        editNodeProperties_type.value
+    );
+
 
 }
 
@@ -75,14 +72,9 @@ $(function () {
     });
 
     $("#edit_node_type").on('change',(e) => {
-        const propertiesDiv = $("#edit-node-type-properties");
-        propertiesDiv.empty();
         let selectedType = $("#edit_node_type option:selected").val();
-        // console.log("Selected type:", selectedType);
-        if (selectedType === node_types.task_group) {
-            propertiesDiv.append(mk_agent_dialog_properties());
-        }
+        build_node_type_properties_dialog(
+            "#edit-node-type-properties",
+            selectedType);
     });
-
-
 })

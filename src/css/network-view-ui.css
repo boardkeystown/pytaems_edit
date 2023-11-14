@@ -82,6 +82,10 @@
     display: none;
 }
 
+#edit-edge-dialog {
+    display: none;
+}
+
 /*#edit-edge-dialog {*/
 /*    display: none;*/
 /*}*/

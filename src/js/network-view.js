@@ -1,9 +1,9 @@
 let current_node = null;
 let current_edge = null;
+
 const current_mouse_network_pos = {
     top: 0 + 'px', left: 0 + 'px'
 };
-
 
 // visjs shapes ellipse, circle, box, diamond, dot, star, triangle, triangleDown, square
 const node_types = {
@@ -17,7 +17,18 @@ const node_types = {
     consumable_resource_shape:'triangleDown',
     none_consumable_resource:'None_Consumable_Resource',
     none_consumable_resource_shape:'triangleDown',
-}
+};
+
+const edge_types = {
+    consumes: "Consumes",
+    enables: "Enables",
+    disables: "Disables",
+    facilitates: "Facilitates",
+    hinders1: "Hinders1",
+    limits: "Limits",
+    produces: "Produces",
+};
+
 
 let network;
 
@@ -170,15 +181,36 @@ function toggle_physics_btn() {
 
 function refresh_nodes_types() {
     nodes.forEach(node => {
-        if (node.obj.type === node_types.task_group) {
-            node.shape = node_types.task_group_shape;
-        } else if (node.obj.type === node_types.consumable_resource) {
-            node.shape = node_types.consumable_resource_shape;
-        } else if (node.obj.type === node_types.none_consumable_resource) {
-            node.shape = node_types.none_consumable_resource_shape;
-        } else {
-            node.shape = node_types.task_shape;
+
+        switch (node.obj.type) {
+            case node_types.task_group:
+                node.shape = node_types.task_group_shape;
+                break;
+            case node_types.task:
+                node.shape = node_types.task_shape;
+                break;
+            case node_types.method_shape:
+                node.shape = node_types.method_shape;
+                break;
+            case node_types.consumable_resource:
+                node.shape = node_types.consumable_resource_shape;
+                break;
+            case node_types.none_consumable_resource:
+                node.shape = node_types.none_consumable_resource_shape;
+                break;
+            default:
+                node.shape = node_types.task_shape;
+                break;
         }
+        // if (node.obj.type === node_types.task_group) {
+        //     node.shape = node_types.task_group_shape;
+        // } else if (node.obj.type === node_types.consumable_resource) {
+        //     node.shape = node_types.consumable_resource_shape;
+        // } else if (node.obj.type === node_types.none_consumable_resource) {
+        //     node.shape = node_types.none_consumable_resource_shape;
+        // } else {
+        //     node.shape = node_types.task_shape;
+        // }
         nodes.update(node);
     });
 }
