@@ -1,11 +1,9 @@
 function editNodeBtn() {
     console.log(`the current node is ${current_node}`)
     contextMenu.style.display = 'none';
-    $("#edit-node-dialog").toggle()
-    const dialog = $("#edit-node-dialog");
-    dialog.css('position', 'absolute');
-    dialog.css('top', current_mouse_network_pos.top);
-    dialog.css('left', current_mouse_network_pos.left);
+    show_dialog_at("#edit-node-dialog",
+                    current_mouse_network_pos.top,
+                    current_mouse_network_pos.left)
 
     const editNodeProperties_type = document.getElementById("edit_node_type");
     const current_node_properties = nodes.get(current_node);
@@ -47,10 +45,9 @@ editNodeProperties.addEventListener('submit', function (e) {
         }
     });
     refresh_nodes_types();
-    // editNodeProperties.reset();
+    editNodeProperties.reset();
+    $("#edit-node-dialog").toggle()
 });
-
-
 
 
 $(function () {
