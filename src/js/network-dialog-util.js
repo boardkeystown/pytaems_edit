@@ -1,3 +1,15 @@
+// constants
+
+const default_available_nodes_dropdown_options = [
+    {value: '0', text: 'none'},
+    {value: '1', text: 'none2'},
+];
+
+
+/**
+ * @param available_nodes vis.DataSet[{id: 'node-0', label: 'node-0'}]
+ * @returns [{value: '0', text: 'none'}]
+ */
 function mk_nodes_into_dropdown_options(available_nodes) {
     const nodes_array = available_nodes.get();
     let options = nodes_array.map(node => {
@@ -18,8 +30,6 @@ function add_available_nodes_to_selection_drop_down(
     options,
     default_selection
 ) {
-    console.log("assssssssss")
-    console.log(selection_drop_down)
     selection_drop_down.length = 0;
     options.forEach(function (option) {
         let opt = document.createElement('option');
@@ -42,5 +52,4 @@ function show_dialog_at(dialog_id_name_str,top_px_str,left_px_str) {
     dialog.css('position', 'absolute');
     dialog.css('top', top_px_str);
     dialog.css('left', left_px_str);
-
 }

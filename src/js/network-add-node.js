@@ -12,7 +12,7 @@ function addNodeBtn() {
                     current_mouse_network_pos.top,
                     current_mouse_network_pos.left);
     const current_options = mk_nodes_into_dropdown_options(nodes);
-    add_available_nodes_to_selection_drop_down(available_nodes_drop_down, current_options, current_node)
+    add_available_nodes_to_selection_drop_down(add_node_drop_down_options, current_options, current_node)
 }
 
 const addNewNode = document.getElementById("add-node-dialog-input-form");
@@ -31,7 +31,7 @@ addNewNode.addEventListener("submit", function (e) {
             case 'new_node_relation':
                 new_node_data.relation = value;
                 break;
-            case 'available_nodes':
+            case 'new_node_available_nodes':
                 new_node_data.parent_id = value;
                 break;
             case 'new_node_type':
@@ -56,7 +56,8 @@ addNewNode.addEventListener("submit", function (e) {
             arrows: "to",
             color: {color: "blue"},
         });
-    } else {
+    }
+    if (new_node_data.relation === 'from') {
         edges.add({
             from: new_node_data.parent_id,
             to: new_id,
@@ -64,6 +65,7 @@ addNewNode.addEventListener("submit", function (e) {
             color: {color: "blue"},
         });
     }
+    console.log(edges)
     // fix type if it changes
     refresh_nodes_types();
     // reset and close dialog
@@ -72,14 +74,9 @@ addNewNode.addEventListener("submit", function (e) {
 })
 
 
-const available_nodes_drop_down = document.getElementById("available_nodes");
-const available_nodes_options = [
-    {value: '0', text: 'none'},
-    {value: '1', text: 'none2'},
-];
-
-add_available_nodes_to_selection_drop_down(available_nodes_drop_down,
-                                           available_nodes_options,
+const add_node_drop_down_options = document.getElementById("new_node_available_nodes");
+add_available_nodes_to_selection_drop_down(add_node_drop_down_options,
+                                           default_available_nodes_dropdown_options,
                                                  '0')
 
 $(function () {

@@ -56,12 +56,12 @@
 }
 
 #add-node-dialog {
-    display: block;
+    display: none;
 }
 #edit-node-dialog {
     display: none;
 }
 #remove-node-dialog {
-    display: none;
+    display: block;
 }
 

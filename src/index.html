@@ -21,8 +21,9 @@
     <script defer src="js/network-dialog-util.js" type="text/javascript"></script>
     <script defer src="js/network-add-node.js" type="text/javascript"></script>
     <script defer src="js/network-edit-node.js" type="text/javascript"></script>
-    <script defer src="js/netwrok-remove-node.js" type="text/javascript"></script>
+    <script defer src="js/network-remove-node.js" type="text/javascript"></script>
     <script defer src="js/network-context-menu.js" type="text/javascript"></script>
+
 
 </head>
 <body>
@@ -37,17 +38,17 @@
 <!--right click context menu -->
 <div id="node-context-menu">
     <ul class="node-context-menu-ul">
-        <li class="node-context-menu-li" onclick="editNodeBtn()"> Edit Node...</li>
         <li class="node-context-menu-li" onclick="addNodeBtn()"> Add Node...</li>
+        <li class="node-context-menu-li" onclick="editNodeBtn()"> Edit Node...</li>
         <li class="node-context-menu-li" onclick="removeNodeBnt()"> Remove Node...</li>
     </ul>
 </div>
 
-<!--add new node dialog -->
+<!--add dialog -->
 
 <div id="add-node-dialog" class="node-dialog">
     <div class="node-dialog-header">
-        <h4> Add New Node </h4>
+        <h4> Add Node </h4>
         <button id="close-add-node-dialog">X</button>
     </div>
     <div class="node-dialog-content">
@@ -60,8 +61,9 @@
             <select id="new_node_relation" , name="new_node_relation">
                 <option value="form" , name="from"> from</option>
                 <option value="to" , name="to"> to</option>
+                <option value="none" , name="none"> none</option>
             </select>
-            <select id="available_nodes" name="available_nodes">
+            <select id="new_node_available_nodes" name="new_node_available_nodes">
                 <!-- filled from java script-->
             </select>
             <br>
@@ -117,12 +119,13 @@
         <form id="remove-node-dialog-input-form"
               onsubmit=""
               autocomplete="off">
-            <label for="remove_node">Name: </label>
-            <select id="remove_node" name="remove_node">
+            <label for="remove_node_available_nodes">Name: </label>
+            <select id="remove_node_available_nodes" name="remove_node_available_nodes">
                 <!-- filled from java script-->
             </select>
             <br>
-            <input style="color: red; font-weight: bold" type="submit" value="Confirm Remove">
+            <br>
+            <input style="color: red; font-weight: bold" type="submit" value="Remove">
         </form>
     </div>
 </div>
