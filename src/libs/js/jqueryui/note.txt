@@ -1,0 +1,5 @@
+https://cdnjs.com/libraries/jqueryui/1.8.24
+https://code.jquery.com/ui/1.12.1/jquery-ui.js
+https://code.jquery.com/ui/1.12.1/jquery-ui.js
+
+

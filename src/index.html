@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- https://cdnjs.com/libraries/vis -->
+<!-- https://github.com/visjs/vis-network -->
+<!-- https://cdnjs.com/libraries/vis/4.20.1 -->
+<!-- https://visjs.org/ -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> TAMS NODE EDIT </title>
+    <!--  app style sheets  -->
+    <link rel="stylesheet" type="text/css" href="css/base.css"/>
+    <link rel="stylesheet" type="text/css" href="css/network-view.css"/>
+    <link rel="stylesheet" type="text/css" href="css/network-view-ui.css"/>
+    <!-- External libraries -->
+    <script defer src="libs/js/vis/vis.min.js" type="text/javascript"></script>
+    <script defer src="libs/js/jquery/jquery.min.js" type="text/javascript"></script>
+    <script defer src="libs/js/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- app scripts in order of include precedence -->
+    <script defer src="js/network-view.js" type="text/javascript"></script>
+    <script defer src="js/network-dialog-util.js" type="text/javascript"></script>
+    <script defer src="js/network-add-node.js" type="text/javascript"></script>
+    <script defer src="js/network-edit-node.js" type="text/javascript"></script>
+    <script defer src="js/netwrok-remove-node.js" type="text/javascript"></script>
+    <script defer src="js/network-context-menu.js" type="text/javascript"></script>
+
+</head>
+<body>
+
+<div class="main-container">
+    <input type="file" accept="text/json" id="upload-network-json-file">
+    <button id="save-to-json" onclick="save_network_btn()"> Save To Json</button>
+    <button id="toggle-physics" onclick="toggle_physics_btn()"> Toggle Physics</button>
+    <div id="network-view"></div>
+</div>
+
+<!--right click context menu -->
+<div id="node-context-menu">
+    <ul class="node-context-menu-ul">
+        <li class="node-context-menu-li" onclick="editNodeBtn()"> Edit Node...</li>
+        <li class="node-context-menu-li" onclick="addNodeBtn()"> Add Node...</li>
+        <li class="node-context-menu-li" onclick="removeNodeBnt()"> Remove Node...</li>
+    </ul>
+</div>
+
+<!--add new node dialog -->
+
+<div id="add-node-dialog" class="node-dialog">
+    <div class="node-dialog-header">
+        <h4> Add New Node </h4>
+        <button id="close-add-node-dialog">X</button>
+    </div>
+    <div class="node-dialog-content">
+        <form id="add-node-dialog-input-form"
+              onsubmit=""
+              autocomplete="off">
+            <label for="new_node_name">Name:</label>
+            <input type="text" id="new_node_name" name="new_node_name" required pattern="^\w+(-\w+)*$">
+            <br>
+            <select id="new_node_relation" , name="new_node_relation">
+                <option value="form" , name="from"> from</option>
+                <option value="to" , name="to"> to</option>
+            </select>
+            <select id="available_nodes" name="available_nodes">
+                <!-- filled from java script-->
+            </select>
+            <br>
+            <label for="new_node_type">Type:</label>
+            <select id="new_node_type" name="new_node_type">
+                <option value="Task" , name="Task"> Task</option>
+                <option value="Method" , name="Method"> Method</option>
+                <option value="Consumable_Resource" , name="Consumable_Resource"> Consumable Resource</option>
+                <option value="none_consumable_resource" , name="none_consumable_resource"> None Consumable Resource</option>
+                <option value="Task_Group" , name="Task_Group"> Task Group</option>
+            </select>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+
+<!--edit node dialog -->
+
+<div id="edit-node-dialog" class="node-dialog">
+    <div class="node-dialog-header">
+        <h4> Edit Node </h4>
+        <button id="close-edit-node-dialog">X</button>
+    </div>
+    <div class="node-dialog-content">
+        <form id="edit-node-dialog-input-form"
+              onsubmit=""
+              autocomplete="off">
+            <label for="edit_node_name">Name:</label>
+            <input type="text" id="edit_node_name" name="edit_node_name" required pattern="^\w+(-\w+)*$">
+            <br>
+            <label for="edit_node_type">Type:</label>
+            <select id="edit_node_type" name="edit_node_type">
+                <option value="Task" , name="Task"> Task</option>
+                <option value="Method" , name="Method"> Method</option>
+                <option value="Consumable_Resource" , name="Consumable_Resource"> Consumable Resource</option>
+                <option value="none_consumable_resource" , name="none_consumable_resource"> None Consumable Resource</option>
+                <option value="Task_Group" , name="Task_Group"> Task Group</option>
+            </select>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+
+<!--remove node dialog -->
+<div id="remove-node-dialog" class="node-dialog">
+    <div class="node-dialog-header">
+        <h4> Remove Node </h4>
+        <button id="close-remove-node-dialog">X</button>
+    </div>
+    <div class="node-dialog-content">
+        <form id="remove-node-dialog-input-form"
+              onsubmit=""
+              autocomplete="off">
+            <label for="remove_node">Name: </label>
+            <select id="remove_node" name="remove_node">
+                <!-- filled from java script-->
+            </select>
+            <br>
+            <input style="color: red; font-weight: bold" type="submit" value="Confirm Remove">
+        </form>
+    </div>
+</div>
+
+
+
+</body>
+</html>
