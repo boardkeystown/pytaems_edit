@@ -26,19 +26,21 @@ removeNode.addEventListener("submit",function (e) {
                 console.log(key + ' , ' + value);
         }
     }
-    //
     let node_to_remove = nodes.get(remove_node_options.name);
     if (node_to_remove) {
-        nodes.remove(node_to_remove);
-        edges.forEach(edge => {
-            if (edge.from === remove_node_options.name || edge.to === remove_node_options.name) {
-                edges.remove(edge);
-            }
-        })
+        // can't remove last node!
+        if (nodes.length>1) {
+            nodes.remove(node_to_remove);
+            edges.forEach(edge => {
+                if (edge.from === remove_node_options.name || edge.to === remove_node_options.name) {
+                    edges.remove(edge);
+                }
+            })
+        }
     }
-
+    removeNode.reset();
+    $("#remove-node-dialog").toggle();
 });
-
 
 
 const remove_node_drop_down_options = document.getElementById("remove_node_available_nodes");

@@ -1,9 +1,3 @@
-const new_node_data = {
-    new_node_name: "",
-    relation: "",
-    parent_id: "",
-    type: "",
-};
 
 function addNodeBtn() {
     console.log(`the current node is ${current_node}`)
@@ -18,6 +12,12 @@ function addNodeBtn() {
 const addNewNode = document.getElementById("add-node-dialog-input-form");
 addNewNode.addEventListener("submit", function (e) {
     e.preventDefault();
+    const new_node_data = {
+        new_node_name: "",
+        relation: "",
+        parent_id: "",
+        type: "",
+    };
     let formData = new FormData(e.target);
     console.log(formData);
     for (let pair of formData.entries()) {
@@ -41,6 +41,7 @@ addNewNode.addEventListener("submit", function (e) {
                 console.log(key + " , " + value);
         }
     }
+    console.log(new_node_data)
     let new_id = new_node_data.new_node_name;
     nodes.add({
         id: new_id,
@@ -65,7 +66,6 @@ addNewNode.addEventListener("submit", function (e) {
             color: {color: "blue"},
         });
     }
-    console.log(edges)
     // fix type if it changes
     refresh_nodes_types();
     // reset and close dialog
