@@ -268,59 +268,130 @@ function build_edge_type_properties_dialog(
 
 /*  node type dialog properties  */
 
-function mk_qaf_drop_down_options() {
+const node_type_properties_key_names = {
+    agent: "agent",
+    qaf: "qaf",
+    arrival_time: "arrival_time",
+    earliest_start_time: "earliest_start_time",
+    deadline: "deadline",
+};
+
+const qaf_type_properties_key_names = {
+    q_max:"q_max",
+    q_min:"q_min",
+    q_sum:"q_sum",
+    q_sum_all:"q_sum_all",
+    seq_min:"seq_min",
+    seq_max:"seq_max",
+    seq_sum:"seq_sum",
+    seq_last:"seq_last",
+    q_exactly_one:"q_exactly_one",
+    q_last:"q_last",
+    q_sigmoid:"q_sigmoid",
+};
+
+function mk_selected(
+    dict_to_check,
+    key) {
+    let result = '';
+    if (key !== null && dict_to_check.hasOwnProperty(key)) {
+        result = `selected`;
+    }
+    return result;
+}
+
+function mk_qaf_drop_down_options(sno) {
+    let qaf_type = null;
+    if (sno && sno.hasOwnProperty("obj")) {
+        qaf_type = get_value(sno.obj,"qaf");
+    }
     return `
     <label> qaf: </label>
-    <select id="qaf_selection" name="qaf">
-        <option value="q_max" > q_max </option>
-        <option value="q_min" > q_min </option>
-        <option value="q_sum" > q_sum </option>
-        <option value="q_sum_all" > q_sum_all </option>
-        <option value="seq_min" > seq_min </option>
-        <option value="seq_max" > seq_max </option>
-        <option value="seq_sum" > seq_sum </option>
-        <option value="seq_last" > seq_last </option>
-        <option value="q_exactly_one" > q_exactly_one </option>
-        <option value="q_last" > q_last </option>
-        <option value="q_sigmoid" > q_sigmoid </option>
+    <select id="qaf_selection" name="qaf" selected="q_sigmoid">
+        <option value="q_max"         ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > q_max          </option>
+        <option value="q_min"         ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > q_min          </option>
+        <option value="q_sum"         ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > q_sum          </option>
+        <option value="q_sum_all"     ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > q_sum_all      </option>
+        <option value="seq_min"       ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > seq_min        </option>
+        <option value="seq_max"       ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > seq_max        </option>
+        <option value="seq_sum"       ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > seq_sum        </option>
+        <option value="seq_last"      ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > seq_last       </option>
+        <option value="q_exactly_one" ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > q_exactly_one  </option>
+        <option value="q_last"        ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > q_last         </option>
+        <option value="q_sigmoid"     ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > q_sigmoid      </option>
     </select>
     `;
 }
 
-function mk_task_group_dialog_properties() {
+function mk_input_value(value) {
+    let result = '';
+    if (value !== null) {
+        result = `value=${value}`;
+    }
+    return result;
+}
+
+function get_value(
+    dict,
+    key,
+    default_value =null
+) {
+    return dict.hasOwnProperty(key) ? dict[key] : default_value;
+}
+
+function mk_task_group_dialog_properties(sno) {
+    let agent = null;
+    let arrival_time = null;
+    let earliest_start_time = null;
+    let deadline = null;
+    if (sno && sno.hasOwnProperty("obj")) {
+        agent = get_value(sno.obj,node_type_properties_key_names.agent);
+        arrival_time = get_value(sno.obj,node_type_properties_key_names.arrival_time);
+        earliest_start_time = get_value(sno.obj,node_type_properties_key_names.arrival_time)
+        deadline = get_value(sno.obj,node_type_properties_key_names.deadline)
+    }
     return `
             <label> Agent: </label>
-            <input type="text" name="agent">
+            <input type="text" name=${node_type_properties_key_names.agent} ${mk_input_value(agent)} pattern="^\\w+(-\\w+)*$">
             <br>
-           ` + mk_qaf_drop_down_options() + `
+           ` + mk_qaf_drop_down_options(sno) + `
             <br>
             <label> Arrival Time: </label>
-            <input type="number" name="arrival_time">
+            <input type="number" step="any" name=${node_type_properties_key_names.arrival_time} ${mk_input_value(arrival_time)} >
             <br>
             <label> Earliset Start Time: </label>
-            <input type="number" name="earliset_start_time">
+            <input type="number" step="any" name=${node_type_properties_key_names.earliest_start_time} ${mk_input_value(earliest_start_time)} >
             <br>
             <label> Deadline: </label>
-            <input type="number" name="deadline">
+            <input type="number" step="any" name=${node_type_properties_key_names.deadline} ${mk_input_value(deadline)} >
             `;
 }
 
-
-function mk_task_dialog_properties() {
+function mk_task_dialog_properties(sno) {
+    let agent = null;
+    let arrival_time = null;
+    let earliest_start_time = null;
+    let deadline = null;
+    if (sno && sno.hasOwnProperty("obj")) {
+        agent = get_value(sno.obj,node_type_properties_key_names.agent);
+        arrival_time = get_value(sno.obj,node_type_properties_key_names.arrival_time);
+        earliest_start_time = get_value(sno.obj,node_type_properties_key_names.arrival_time)
+        deadline = get_value(sno.obj,node_type_properties_key_names.deadline)
+    }
     return `
             <label> Agent: </label>
-            <input type="text">
+            <input type="text" name=${node_type_properties_key_names.agent} ${mk_input_value(agent)} pattern="^\\w+(-\\w+)*$">
             <br>
-           ` + mk_qaf_drop_down_options() + `
+           ` + mk_qaf_drop_down_options(sno) + `
             <br>
             <label> Arrival Time: </label>
-            <input type="number" name="arrival_time">
+            <input type="number" step="any" name=${node_type_properties_key_names.arrival_time} ${mk_input_value(arrival_time)} >
             <br>
             <label> Earliset Start Time: </label>
-            <input type="number" name="earliset_start_time">
+            <input type="number" step="any" name=${node_type_properties_key_names.earliest_start_time} ${mk_input_value(earliest_start_time)} >
             <br>
             <label> Deadline: </label>
-            <input type="number" name="deadline">
+            <input type="number" step="any" name=${node_type_properties_key_names.deadline} ${mk_input_value(deadline)} >
             `;
 }
 
@@ -397,21 +468,20 @@ function mk_none_consumable_resource_dialog_properties() {
  *
  * @param form_dialog_id_str "#id-name"
  * @param selected_type_str   a node_type str
+ * @param selected_node_object   a network node
  */
 function build_node_type_properties_dialog(
     form_dialog_id_str,
-    selected_type_str
+    selected_type_str,
+    selected_node_object,
 ) {
     // get and empty out the properties dialog
     const propertiesDiv = $(form_dialog_id_str);
     propertiesDiv.empty();
     // base on selected type append the dialogs
-    //TODO: get the current values of the node
-    // if it is a new node we do not care since it
-    // should be default blank
     switch (selected_type_str) {
         case node_types.task_group:
-            propertiesDiv.append(mk_task_group_dialog_properties());
+            propertiesDiv.append(mk_task_group_dialog_properties(selected_node_object));
             break;
         case node_types.task:
             propertiesDiv.append(mk_task_dialog_properties());

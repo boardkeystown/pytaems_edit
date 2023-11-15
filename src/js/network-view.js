@@ -127,8 +127,20 @@ function startNetwork(data) {
 
 // set up nodes and edges
 const nodes = new vis.DataSet([
-    {id: "node-0", label: "node-0", obj: { type: "Task_Group"}},
+    {
+        id: "node-0",
+        label: "node-0",
+        obj: {
+                type: "Task_Group",
+                agent: null,
+                qaf: "q_sum_all",
+                arrival_time: null,
+                earliest_start_time: null,
+                deadline: null,
+             },
+    },
 ]);
+
 
 // https://visjs.github.io/vis-data/data/dataset.html
 
@@ -141,7 +153,6 @@ const edges = new vis.DataSet([]);
 // edges.on('*', function (event, properties, senderId) {
 //     // console.log('event:', event, 'properties:', properties, 'senderId:', senderId);
 // });
-
 
 const nodesView = new vis.DataView(nodes, {});
 const edgesView = new vis.DataView(edges, {});

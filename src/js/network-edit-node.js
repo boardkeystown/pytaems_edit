@@ -13,8 +13,10 @@ function editNodeBtn() {
     //set up properties
     build_node_type_properties_dialog(
         "#edit-node-type-properties",
-        editNodeProperties_type.value
+        editNodeProperties_type.value,
+        nodes.get(current_node)
     );
+
 
 
 }
@@ -30,6 +32,7 @@ editNodeProperties.addEventListener('submit', function (e) {
 
         },
     };
+
     for (let pair of formData.entries()) {
         let key = pair[0];
         let value = pair[1];
@@ -38,11 +41,12 @@ editNodeProperties.addEventListener('submit', function (e) {
                 new_node_properties_options.new_name = value;
                 break;
             default:
-                // console.log(key + " , " + value);
+                console.log(`${key}  - ${value} `)
                 new_node_properties_options.obj[key]=value;
                 break;
         }
     }
+
     const current_node_properties = nodes.get(current_node);
     const new_node_properties = nodes.get(current_node);
     nodes.remove(current_node_properties);
@@ -60,6 +64,7 @@ editNodeProperties.addEventListener('submit', function (e) {
             edges.update({id: edge.id, to: new_node_properties.id});
         }
     });
+
     refresh_nodes_types();
     editNodeProperties.reset();
     $("#edit-node-dialog").toggle()
@@ -76,6 +81,7 @@ $(function () {
         let selectedType = $("#edit_node_type option:selected").val();
         build_node_type_properties_dialog(
             "#edit-node-type-properties",
-            selectedType);
+            selectedType,
+            nodes.get(current_node));
     });
 })
