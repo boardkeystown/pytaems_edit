@@ -42,7 +42,9 @@ editNodeProperties.addEventListener('submit', function (e) {
                 break;
             default:
                 console.log(`${key}  - ${value} `)
-                new_node_properties_options.obj[key]=value;
+                new_node_properties_options.obj[key] =
+                    (value === '' || value === undefined  ) ?
+                        null : value;
                 break;
         }
     }

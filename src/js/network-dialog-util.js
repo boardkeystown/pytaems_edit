@@ -325,7 +325,7 @@ function mk_qaf_drop_down_options(sno) {
 
 function mk_input_value(value) {
     let result = '';
-    if (value !== null) {
+    if (value !== null && value !== undefined && value !== '') {
         result = `value=${value}`;
     }
     return result;
