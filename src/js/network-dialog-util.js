@@ -55,7 +55,6 @@ function add_options_to_selection_drop_down(
         selection_drop_down.appendChild(opt);
     });
     selection_drop_down.value = default_selection;
-    console.log(default_selection)
 }
 
 /**
@@ -265,18 +264,14 @@ function build_edge_type_properties_dialog(
             console.log(`${selected_type_str} is not a know node_type!`);
             break;
     }
-
-
 }
-
-
 
 /*  node type dialog properties  */
 
 function mk_qaf_drop_down_options() {
     return `
     <label> qaf: </label>
-    <select id="qaf_selection" name="qaf_type">
+    <select id="qaf_selection" name="qaf">
         <option value="q_max" > q_max </option>
         <option value="q_min" > q_min </option>
         <option value="q_sum" > q_sum </option>
@@ -300,13 +295,13 @@ function mk_task_group_dialog_properties() {
            ` + mk_qaf_drop_down_options() + `
             <br>
             <label> Arrival Time: </label>
-            <input type="number">
+            <input type="number" name="arrival_time">
             <br>
             <label> Earliset Start Time: </label>
-            <input type="number">
+            <input type="number" name="earliset_start_time">
             <br>
             <label> Deadline: </label>
-            <input type="number">
+            <input type="number" name="deadline">
             `;
 }
 
@@ -319,84 +314,82 @@ function mk_task_dialog_properties() {
            ` + mk_qaf_drop_down_options() + `
             <br>
             <label> Arrival Time: </label>
-            <input type="number">
+            <input type="number" name="arrival_time">
             <br>
             <label> Earliset Start Time: </label>
-            <input type="number">
+            <input type="number" name="earliset_start_time">
             <br>
             <label> Deadline: </label>
-            <input type="number">
+            <input type="number" name="deadline">
             `;
 }
 
 function mk_method_dialog_properties() {
     return `
             <label> Agent: </label>
-            <input type="text">
-            <br>
-           ` + mk_qaf_drop_down_options() + `
+            <input type="text" name="agent">
             <br>
             <label> Arrival Time: </label>
-            <input type="number">
+            <input type="number" name="arrival_time">
             <br>
             <label> Earliset Start Time: </label>
-            <input type="number">
+            <input type="number" name="earliset_start_time">
             <br>
             <label> Deadline: </label>
-            <input type="number">
+            <input type="number" name="deadline">
             <br>
             <label> Start Time: </label>
-            <input type="number">
+            <input type="number" name="start_time">
             <br>
             <label> Finish Time: </label>
-            <input type="number">
+            <input type="number" name="finish_time">
             <br>
             <label> Accrued Time: </label>
-            <input type="number">
+            <input type="number" name="accrued_time">
             <br>
             <label> Nonlocal Flag: </label>
-            <input type="number">
+            <input type="number" name="nonlocal_flag">
             `;
 }
 function mk_consumable_resource_dialog_properties() {
     return `
             <label> Agent: </label>
-            <input type="text">
+            <input type="text" name="agent">
             <br>
            ` + mk_qaf_drop_down_options() + `
             <br>
             <label> Arrival Time: </label>
-            <input type="number">
+            <input type="number" name="arrival_time">
             <br>
             <label> State: </label>
-            <input type="number">
+            <input type="number" name="state">
             <br>
             <label> Depleted At: </label>
-            <input type="number">
+            <input type="number" name="depleted_at">
             <br>
             <label> Overloaded At: </label>
-            <input type="number">        
+            <input type="number" name="overloaded_at">        
             `;
 }
 
 function mk_none_consumable_resource_dialog_properties() {
     return `
             <label> Agent: </label>
-            <input type="text">
+            <input type="text" name="agent">
             <br>
            ` + mk_qaf_drop_down_options() + `
             <br>
             <label> Arrival Time: </label>
-            <input type="number">
+            <input type="number" name="arrival_time">
             <br>
             <label> State: </label>
-            <input type="number">
+            <input type="number" name="state">
             <br>
             <label> Depleted At: </label>
-            <input type="number">
+            <input type="number" name="depleted_at">
             <br>
             <label> Overloaded At: </label>
-            <input type="number">        
+            <input type="number" name="overloaded_at">        
             `;
 }
 

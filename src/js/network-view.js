@@ -52,19 +52,26 @@ function startNetwork(data) {
             hierarchicalRepulsion: {
                 centralGravity: 0.0, springLength: 200, springConstant: 0.01, nodeDistance: 120, damping: 0.09
             }
+        },
+        nodes: {
+            font: {
+                multi: "html", // Enable multi-font options"
+            }
         }
     };
     network = new vis.Network(container, data, options);
-    network.on("click", function (params) {
-        if (params.nodes.length) {
-            let nodeId = params.nodes[0];
-            let nodeData = network.body.data.nodes.get(nodeId);
-            console.log(`current_node selected: ${nodeId}`);
-        }
-    })
+
+    // network.on("click", function (params) {
+    //     if (params.nodes.length) {
+    //         let nodeId = params.nodes[0];
+    //         let nodeData = network.body.data.nodes.get(nodeId);
+    //         console.log(`current_node selected: ${nodeId}`);
+    //     }
+    // })
+
     network.on("stabilized", function (params) {
         if (params.iterations > 0) {
-            console.log("The network is stabilized after " + params.iterations + " iterations");
+            // console.log("The network is stabilized after " + params.iterations + " iterations");
             // Disable physics after initial stabilization
             network.setOptions({physics: false});
             network.setOptions({layout: {hierarchical: {enabled: false}}});
@@ -85,8 +92,6 @@ function startNetwork(data) {
             show_node_context_menu_at(current_mouse_network_pos.top, current_mouse_network_pos.left);
         } else if (params.edges.length > 0) {
             const edgeId = params.edges[0]; // Get the first edge's ID
-            // const edgeData = edges.get(edgeId);
-            // console.log("Right-clicked on edge:", edgeData);
             console.log("Right-clicked on edge:", edgeId);
             current_edge = edgeId
             // figure out where in the network out mouse is and save it
@@ -97,6 +102,27 @@ function startNetwork(data) {
             show_edge_context_menu_at(current_mouse_network_pos.top, current_mouse_network_pos.left);
         }
     })
+
+    function add_qaf_label(ctx,nodeId) {
+        const node_positions = network.getPositions();
+        Object.keys(node_positions).forEach(nodeId => {
+            const position = node_positions[nodeId];
+            const y_offset = 20;
+            let text =  "Hello World";
+            let text2 = "███████████";
+            const textMetrics = ctx.measureText(text);
+            const textWidth = textMetrics.width;
+            ctx.font = "8px Courier New";
+            ctx.fillStyle = '#1bd205';
+            ctx.fillText(text2, position.x-(textWidth/3),position.y+y_offset);
+            ctx.fillStyle = '#0c0909';
+            ctx.fillText(text, position.x-(textWidth/3),position.y+y_offset);
+        });
+    }
+    //TODO: add node label
+    // network.on("afterDrawing", function (ctx) {
+    //     //
+    // });
 }
 
 // set up nodes and edges
@@ -104,16 +130,17 @@ const nodes = new vis.DataSet([
     {id: "node-0", label: "node-0", obj: { type: "Task_Group"}},
 ]);
 
-
 // https://visjs.github.io/vis-data/data/dataset.html
-nodes.on('*', function (event, properties, senderId) {
-    console.log('event:', event, 'properties:', properties, 'senderId:', senderId);
-});
+
+// nodes.on('*', function (event, properties, senderId) {
+//     // console.log('event:', event, 'properties:', properties, 'senderId:', senderId);
+// });
 
 const edges = new vis.DataSet([]);
-edges.on('*', function (event, properties, senderId) {
-    console.log('event:', event, 'properties:', properties, 'senderId:', senderId);
-});
+
+// edges.on('*', function (event, properties, senderId) {
+//     // console.log('event:', event, 'properties:', properties, 'senderId:', senderId);
+// });
 
 
 const nodesView = new vis.DataView(nodes, {});

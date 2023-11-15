@@ -26,7 +26,9 @@ editNodeProperties.addEventListener('submit', function (e) {
     console.log(formData);
     let new_node_properties_options = {
         new_name: null,
-        type: null,
+        obj : {
+
+        },
     };
     for (let pair of formData.entries()) {
         let key = pair[0];
@@ -35,10 +37,9 @@ editNodeProperties.addEventListener('submit', function (e) {
             case 'edit_node_name':
                 new_node_properties_options.new_name = value;
                 break;
-            case 'edit_node_type':
-                new_node_properties_options.type = value;
             default:
-                console.log(key + " , " + value);
+                // console.log(key + " , " + value);
+                new_node_properties_options.obj[key]=value;
                 break;
         }
     }
@@ -47,7 +48,7 @@ editNodeProperties.addEventListener('submit', function (e) {
     nodes.remove(current_node_properties);
     new_node_properties.id = new_node_properties_options.new_name;
     new_node_properties.label = new_node_properties_options.new_name;
-    new_node_properties.obj.type = new_node_properties_options.type;
+    new_node_properties.obj = new_node_properties_options.obj;
 
     nodes.add(new_node_properties);
 
