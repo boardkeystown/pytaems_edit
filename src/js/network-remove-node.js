@@ -5,7 +5,7 @@ function removeNodeBnt() {
                     current_mouse_network_pos.top,
                     current_mouse_network_pos.left)
     const current_options = mk_nodes_into_dropdown_options(nodes);
-    add_available_nodes_to_selection_drop_down(remove_node_drop_down_options, current_options, current_node)
+    add_options_to_selection_drop_down(remove_node_drop_down_options, current_options, current_node)
 }
 
 const removeNode = document.getElementById('remove-node-dialog-input-form');
@@ -44,7 +44,7 @@ removeNode.addEventListener("submit",function (e) {
 
 
 const remove_node_drop_down_options = document.getElementById("remove_node_available_nodes");
-add_available_nodes_to_selection_drop_down(remove_node_drop_down_options,
+add_options_to_selection_drop_down(remove_node_drop_down_options,
                                            default_available_nodes_dropdown_options,
                                                         '0')
 

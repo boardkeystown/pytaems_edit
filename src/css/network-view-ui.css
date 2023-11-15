@@ -83,7 +83,7 @@
 }
 
 #edit-edge-dialog {
-    display: none;
+    display: block;
 }
 
 /*#edit-edge-dialog {*/

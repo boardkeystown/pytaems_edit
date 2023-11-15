@@ -5,9 +5,10 @@
 <!-- https://cdnjs.com/libraries/vis/4.20.1 -->
 <!-- https://visjs.org/ -->
 <head>
+    <link rel="icon" type="image/png" href="assets/global/favicon32x32.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> TAMS NODE EDIT </title>
+    <title> pytaems edit </title>
     <!--  app style sheets  -->
     <link rel="stylesheet" type="text/css" href="css/base.css"/>
     <link rel="stylesheet" type="text/css" href="css/network-view.css"/>
@@ -48,15 +49,12 @@
     </ul>
 </div>
 
-
 <div id="edge-context-menu" class="context-menu">
     <ul class="context-menu-ul">
         <li class="context-menu-li" onclick="editEdgeBtn()"> Edit Edge...</li>
         <li class="context-menu-li" onclick="removeEdgeBtn()"> Remove Edge...</li>
     </ul>
 </div>
-
-
 
 <!--add dialog -->
 
@@ -73,9 +71,9 @@
             <input type="text" id="new_node_name" name="new_node_name" required pattern="^\w+(-\w+)*$">
             <br>
             <select id="new_node_relation" , name="new_node_relation">
-                <option value="from" , name="from"> from</option>
-                <option value="to" , name="to"> to</option>
-                <option value="none" , name="none"> none</option>
+                <option value="from" > from</option>
+                <option value="to" > to</option>
+                <option value="none" > none</option>
             </select>
             <select id="new_node_available_nodes" name="new_node_available_nodes">
                 <!-- filled from java script-->
@@ -83,11 +81,11 @@
             <br>
             <label for="new_node_type">Type:</label>
             <select id="new_node_type" name="new_node_type">
-                <option value="Task" , name="Task"> Task</option>
-                <option value="Method" , name="Method"> Method</option>
-                <option value="Consumable_Resource" , name="Consumable_Resource"> Consumable Resource</option>
-                <option value="none_consumable_resource" , name="none_consumable_resource"> None Consumable Resource</option>
-                <option value="Task_Group" , name="Task_Group"> Task Group</option>
+                <option value="Task"> Task</option>
+                <option value="Method"> Method</option>
+                <option value="Consumable_Resource"> Consumable Resource</option>
+                <option value="none_consumable_resource"> None Consumable Resource</option>
+                <option value="Task_Group"> Task Group</option>
             </select>
             <br>
             <input type="submit" value="Submit">
@@ -111,11 +109,11 @@
             <br>
             <label for="edit_node_type">Type:</label>
             <select id="edit_node_type" name="edit_node_type">
-                <option value="Task" , name="Task"> Task</option>
-                <option value="Method" , name="Method"> Method</option>
-                <option value="Consumable_Resource" , name="Consumable_Resource"> Consumable Resource</option>
-                <option value="None_Consumable_Resource" , name="None_Consumable_Resource"> None Consumable Resource</option>
-                <option value="Task_Group" , name="Task_Group"> Task Group</option>
+                <option value="Task" > Task</option>
+                <option value="Method" > Method</option>
+                <option value="Consumable_Resource" > Consumable Resource</option>
+                <option value="None_Consumable_Resource" > None Consumable Resource</option>
+                <option value="Task_Group" > Task Group</option>
             </select>
             <div id="edit-node-type-properties">
                 <!-- filled out by javascript -->
@@ -164,8 +162,8 @@
                 <!-- filled from java script-->
             </select>
             <select id="connect_node_relation" , name="connect_node_relation">
-                <option value="to" , name="to"> to</option>
-                <option value="from" , name="from"> from</option>
+                <option value="to"> to</option>
+                <option value="from"> from</option>
             </select>
             <label for="connect_available_nodes_right">Name: </label>
             <select id="connect_available_nodes_right" name="connect_available_nodes_right">
@@ -176,7 +174,6 @@
         </form>
     </div>
 </div>
-
 
 <!-- remove edge dialog -->
 
@@ -208,7 +205,7 @@
         <button id="close-edit-edge-dialog">X</button>
     </div>
     <div class="node-dialog-content">
-        <form id="eidt-edge-dialog-input-form"
+        <form id="edit-edge-dialog-input-form"
               onsubmit=""
               autocomplete="off">
             <label for="edit_edge_available">Edge: </label>
@@ -216,15 +213,27 @@
                 <!-- filled from java script-->
             </select>
             <br>
+            <label for="edit_edge_type">Type: </label>
+            <select id="edit_edge_type" name="edit_edge_type">
+                <option value="none">none</option>
+                <option value="Consumes">Consumes</option>
+                <option value="Enables">Enables</option>
+                <option value="Disables">Disables</option>
+                <option value="Facilitates">Facilitates</option>
+                <option value="Hinders">Hinders</option>
+                <option value="Limits">Limits</option>
+                <option value="Produces">Produces</option>
+            </select>
+            <br>
+            <div id="edit-edge-type-properties">
+                <!-- filled from java script-->
+            </div>
+
             <input type="submit" value="Submit">
         </form>
     </div>
 </div>
 
-
-
-
-
-
 </body>
+
 </html>

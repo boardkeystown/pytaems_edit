@@ -20,12 +20,29 @@ function mk_nodes_into_dropdown_options(available_nodes) {
     });
     return options;
 }
+
+/**
+ * @param available_edge vis.DataSet[{id: 'node-0', label: 'node-0'}]
+ * @returns [{value: '0', text: 'none'}]
+ */
+function mk_edges_into_dropdown_options(available_edge) {
+    const edges_array = available_edge.get();
+    let options = edges_array.map(edge => {
+        return {
+            value: edge.id,
+            text: `from ${edge.from} to ${edge.to}`
+        }
+    });
+    return options;
+}
+
+
 /**
  * @param selection_drop_down  <select id="dropdown"> document element
  * @param options  [{value: '0', text: 'none'}]
  * @param default_selection value
  */
-function add_available_nodes_to_selection_drop_down(
+function add_options_to_selection_drop_down(
     selection_drop_down,
     options,
     default_selection
@@ -41,18 +58,6 @@ function add_available_nodes_to_selection_drop_down(
     console.log(default_selection)
 }
 
-function mk_edges_into_dropdown_options(available_edge) {
-    const edges_array = available_edge.get();
-    let options = edges_array.map(edge => {
-        return {
-            value: edge.id,
-            text: `from ${edge.from} to ${edge.to}`
-        }
-    });
-    return options;
-}
-
-
 /**
  * @param dialog_id_name_str "#id-name"
  * @param top_px_str         "123px"
@@ -67,21 +72,222 @@ function show_dialog_at(dialog_id_name_str,top_px_str,left_px_str) {
 }
 
 
+/*  edge type dialog properties  */
+
+
+function mk_consume_properties() {
+    return `
+    <label> Name: </label>
+    <input type="text" name="label">
+    <br>
+    <label> Agent: </label>
+    <input type="text" name="agent">
+    <br>
+    <label> From Outcomes: </label>
+    <input type="text" name="from_outcome">
+    <br>
+    <label> Model: </label>
+    <input type="text" name="model">
+    <br>
+    <label> Produces: </label>
+    <input type="text" name="produces">
+    `;
+}
+
+function mk_enables_properties() {
+    return `
+    <label> Name: </label>
+    <input type="text" name="label">
+    <br>
+    <label> Agent: </label>
+    <input type="text" name="agent">
+    <br>
+    <label> From Outcomes: </label>
+    <input type="text" name="from_outcome">
+    <br>
+    <label> Delay: </label>
+    <input type="text" name="delay">
+    `;
+}
+
+function mk_disables_properties() {
+    return `
+    <label> Name: </label>
+    <input type="text" name="label">
+    <br>
+    <label> Agent: </label>
+    <input type="text" name="agent">
+    <br>
+    <label> From Outcomes: </label>
+    <input type="text" name="from_outcome">
+    <br>
+    <label> Delay: </label>
+    <input type="text" name="delay">
+    `;
+}
+
+
+function mk_facilitates_properties() {
+    return `
+    <label> Name: </label>
+    <input type="text" name="label">
+    <br>
+    <label> Agent: </label>
+    <input type="text" name="agent">
+    <br>
+    <label> From Outcomes: </label>
+    <input type="text" name="from_outcome">
+    <br>
+    <label> Quality Power: </label>
+    <input type="text" name="quality_power">
+    <br>
+    <label> Duration Power: </label>
+    <input type="text" name="duration_power">
+    <br>
+    <label> Cost Power: </label>
+    <input type="text" name="cost_power">
+    <br>
+    <label> Delay: </label>
+    <input type="text" name="delay">
+    `;
+}
+
+
+function mk_hinders_properties() {
+    return `
+    <label> Name: </label>
+    <input type="text" name="label">
+    <br>
+    <label> Agent: </label>
+    <input type="text" name="agent">
+    <br>
+    <label> From Outcomes: </label>
+    <input type="text" name="from_outcome">
+    <br>
+    <label> Quality Power: </label>
+    <input type="text" name="quality_power">
+    <br>
+    <label> Duration Power: </label>
+    <input type="text" name="duration_power">
+    <br>
+    <label> Cost Power: </label>
+    <input type="text" name="cost_power">
+    <br>
+    <label> Delay: </label>
+    <input type="text" name="delay">
+    `;
+}
+
+
+
+function mk_limits_properties() {
+    return `
+    <label> Name: </label>
+    <input type="text" name="label">
+    <br>
+    <label> Agent: </label>
+    <input type="text" name="agent">
+    <br>
+    <label> From Outcomes: </label>
+    <input type="text" name="from_outcome">
+    <br>
+    <label> Quality Power: </label>
+    <input type="text" name="quality_power">
+    <br>
+    <label> Duration Power: </label>
+    <input type="text" name="duration_power">
+    <br>
+    <label> Cost Power: </label>
+    <input type="text" name="cost_power">
+    <br>
+    <label> Delay: </label>
+    <input type="text" name="delay">
+    `;
+}
+
+
+function mk_produces_properties() {
+    return `
+    <label> Name: </label>
+    <input type="text" name="label">
+    <br>
+    <label> Agent: </label>
+    <input type="text" name="agent">
+    <label> From Outcomes: </label>
+    <br>
+    <input type="text" name="from_outcome">
+    <br>
+    <label> Model: </label>
+    <input type="text" name="model">
+    <br>
+    <label> Produces: </label>
+    <input type="text" name="produces">
+    `;
+}
+
+/**
+ *
+ * @param from_dialog_id_str "#id-name"
+ * @param selected_type_str   a edge_type str
+ */
+function build_edge_type_properties_dialog(
+    from_dialog_id_str,
+    selected_type_str,
+) {
+    // get and empty out the properties dialog
+    const propertiesDiv = $(from_dialog_id_str);
+    propertiesDiv.empty();
+    switch (selected_type_str) {
+        case edge_types.consumes:
+            propertiesDiv.append(mk_consume_properties());
+            break;
+        case edge_types.enables:
+            propertiesDiv.append(mk_enables_properties());
+            break;
+        case edge_types.disables:
+            propertiesDiv.append(mk_disables_properties());
+            break;
+        case edge_types.facilitates:
+            propertiesDiv.append(mk_facilitates_properties());
+            break;
+        case edge_types.hinders:
+            propertiesDiv.append(mk_hinders_properties());
+            break;
+        case edge_types.limits:
+            propertiesDiv.append(mk_limits_properties());
+            break;
+        case edge_types.produces:
+            propertiesDiv.append(mk_produces_properties());
+            break;
+        case 'none':
+            break;
+        default:
+            console.log(`${selected_type_str} is not a know node_type!`);
+            break;
+    }
+
+
+}
+
+
+
+/*  node type dialog properties  */
+
 function mk_qaf_drop_down_options() {
     return `
     <label> qaf: </label>
     <select id="qaf_selection" name="qaf_type">
-        <option value="q_max" name="q_max"> q_max </option>
-        <option value="q_min" name="q_min"> q_min </option>
-        <option value="q_sum" name="q_sum"> q_sum </option>
-        <option value="q_sum_all" name="q_sum_all"> q_sum_all </option>
-        <option value="seq_min" name="seq_min"> seq_min </option>
-        <option value="seq_max" name="seq_max"> seq_max </option>
-        <option value="seq_sum" name="seq_sum"> seq_sum </option>
-        <option value="seq_last" name="seq_last"> seq_last </option>
-        <option value="q_exactly_one" name="q_exactly_one"> q_exactly_one </option>
-        <option value="q_last" name="q_last"> q_last </option>
-        <option value="q_sigmoid" name="q_sigmoid"> q_sigmoid </option>
+        <option value="q_max" > q_max </option>
+        <option value="q_min" > q_min </option>
+        <option value="q_sum" > q_sum </option>
+        <option value="q_sum_all" > q_sum_all </option>
+        <option value="seq_min" > seq_min </option>
+        <option value="seq_max" > seq_max </option>
+        <option value="seq_sum" > seq_sum </option>
+        <option value="seq_last" > seq_last </option>
+        <option value="q_exactly_one" > q_exactly_one </option>
+        <option value="q_last" > q_last </option>
+        <option value="q_sigmoid" > q_sigmoid </option>
     </select>
     `;
 }
@@ -94,13 +300,13 @@ function mk_task_group_dialog_properties() {
            ` + mk_qaf_drop_down_options() + `
             <br>
             <label> Arrival Time: </label>
-            <input type="number" name="arrival_time">
+            <input type="number">
             <br>
             <label> Earliset Start Time: </label>
-            <input type="number" name="earliest_start_time">
+            <input type="number">
             <br>
             <label> Deadline: </label>
-            <input type="number" name="deadline">
+            <input type="number">
             `;
 }
 
@@ -108,89 +314,89 @@ function mk_task_group_dialog_properties() {
 function mk_task_dialog_properties() {
     return `
             <label> Agent: </label>
-            <input type="text" name="agent">
+            <input type="text">
             <br>
            ` + mk_qaf_drop_down_options() + `
             <br>
             <label> Arrival Time: </label>
-            <input type="number" name="arrival_time">
+            <input type="number">
             <br>
             <label> Earliset Start Time: </label>
-            <input type="number" name="earliest_start_time">
+            <input type="number">
             <br>
             <label> Deadline: </label>
-            <input type="number" name="deadline">
+            <input type="number">
             `;
 }
 
 function mk_method_dialog_properties() {
     return `
             <label> Agent: </label>
-            <input type="text" name="agent">
+            <input type="text">
             <br>
            ` + mk_qaf_drop_down_options() + `
             <br>
             <label> Arrival Time: </label>
-            <input type="number" name="arrival_time">
+            <input type="number">
             <br>
             <label> Earliset Start Time: </label>
-            <input type="number" name="earliest_start_time">
+            <input type="number">
             <br>
             <label> Deadline: </label>
-            <input type="number" name="deadline">
+            <input type="number">
             <br>
             <label> Start Time: </label>
-            <input type="number" name="start_time">
+            <input type="number">
             <br>
             <label> Finish Time: </label>
-            <input type="number" name="finish_time">
+            <input type="number">
             <br>
             <label> Accrued Time: </label>
-            <input type="number" name="accrued_time">
+            <input type="number">
             <br>
             <label> Nonlocal Flag: </label>
-            <input type="number" name="nonlocal_flag">
+            <input type="number">
             `;
 }
 function mk_consumable_resource_dialog_properties() {
     return `
             <label> Agent: </label>
-            <input type="text" name="agent">
+            <input type="text">
             <br>
            ` + mk_qaf_drop_down_options() + `
             <br>
             <label> Arrival Time: </label>
-            <input type="number" name="arrival_time">
+            <input type="number">
             <br>
             <label> State: </label>
-            <input type="number" name="state">
+            <input type="number">
             <br>
             <label> Depleted At: </label>
-            <input type="number" name="depleted_at">
+            <input type="number">
             <br>
             <label> Overloaded At: </label>
-            <input type="number" name="overloaded_at">        
+            <input type="number">        
             `;
 }
 
 function mk_none_consumable_resource_dialog_properties() {
     return `
             <label> Agent: </label>
-            <input type="text" name="agent">
+            <input type="text">
             <br>
            ` + mk_qaf_drop_down_options() + `
             <br>
             <label> Arrival Time: </label>
-            <input type="number" name="arrival_time">
+            <input type="number">
             <br>
             <label> State: </label>
-            <input type="number" name="state">
+            <input type="number">
             <br>
             <label> Depleted At: </label>
-            <input type="number" name="depleted_at">
+            <input type="number">
             <br>
             <label> Overloaded At: </label>
-            <input type="number" name="overloaded_at">        
+            <input type="number">        
             `;
 }
 

@@ -24,11 +24,10 @@ const edge_types = {
     enables: "Enables",
     disables: "Disables",
     facilitates: "Facilitates",
-    hinders1: "Hinders1",
+    hinders: "Hinders",
     limits: "Limits",
     produces: "Produces",
 };
-
 
 let network;
 
@@ -181,7 +180,6 @@ function toggle_physics_btn() {
 
 function refresh_nodes_types() {
     nodes.forEach(node => {
-
         switch (node.obj.type) {
             case node_types.task_group:
                 node.shape = node_types.task_group_shape;
@@ -202,15 +200,6 @@ function refresh_nodes_types() {
                 node.shape = node_types.task_shape;
                 break;
         }
-        // if (node.obj.type === node_types.task_group) {
-        //     node.shape = node_types.task_group_shape;
-        // } else if (node.obj.type === node_types.consumable_resource) {
-        //     node.shape = node_types.consumable_resource_shape;
-        // } else if (node.obj.type === node_types.none_consumable_resource) {
-        //     node.shape = node_types.none_consumable_resource_shape;
-        // } else {
-        //     node.shape = node_types.task_shape;
-        // }
         nodes.update(node);
     });
 }

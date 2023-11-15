@@ -7,7 +7,7 @@ function removeEdgeBtn() {
         current_mouse_network_pos.left
     );
     const options = mk_edges_into_dropdown_options(edges)
-    add_available_nodes_to_selection_drop_down(
+    add_options_to_selection_drop_down(
         remove_edge_available_drop_down,
         options,
         current_edge
@@ -44,7 +44,7 @@ remove_edge_dialog_input_form.addEventListener('submit',function (e) {
 });
 
 const remove_edge_available_drop_down = document.getElementById("remove_edge_available");
-add_available_nodes_to_selection_drop_down(
+add_options_to_selection_drop_down(
     remove_edge_available_drop_down,
     default_available_nodes_dropdown_options,
     '0'

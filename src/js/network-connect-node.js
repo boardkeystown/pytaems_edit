@@ -5,12 +5,12 @@ function connectNodeBtn() {
                     current_mouse_network_pos.left);
     const current_options = mk_nodes_into_dropdown_options(nodes);
 
-    add_available_nodes_to_selection_drop_down(
+    add_options_to_selection_drop_down(
         connect_available_nodes_left_drop_down,
         current_options,
         current_node)
     current_options.unshift({value: 'none', text: 'none'});
-    add_available_nodes_to_selection_drop_down(
+    add_options_to_selection_drop_down(
         connect_available_nodes_right_drop_down,
         current_options,
         'none')
@@ -20,11 +20,11 @@ function connectNodeBtn() {
 const connect_available_nodes_left_drop_down = document.getElementById("connect_available_nodes_left");
 const connect_available_nodes_right_drop_down = document.getElementById("connect_available_nodes_right");
 
-add_available_nodes_to_selection_drop_down(
+add_options_to_selection_drop_down(
     connect_available_nodes_left_drop_down,
     default_available_nodes_dropdown_options,
     '0')
-add_available_nodes_to_selection_drop_down(
+add_options_to_selection_drop_down(
     connect_available_nodes_right_drop_down,
     default_available_nodes_dropdown_options,
     '0')
