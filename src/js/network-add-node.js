@@ -16,14 +16,14 @@ addNewNode.addEventListener("submit", function (e) {
         new_node_name: "",
         relation: "",
         parent_id: "",
-        type: "",
+        obj: {
+            type: "",
+        }
     };
     let formData = new FormData(e.target);
-    console.log(formData);
     for (let pair of formData.entries()) {
         let key = pair[0]
         let value = pair[1]
-        console.log(key + " , " + value);
         switch (key) {
             case 'new_node_name':
                 new_node_data.new_node_name = value;
@@ -34,25 +34,22 @@ addNewNode.addEventListener("submit", function (e) {
             case 'new_node_available_nodes':
                 new_node_data.parent_id = value;
                 break;
-            case 'new_node_type':
-                new_node_data.type = value;
-                break;
             default:
-                console.log(key + " , " + value);
+                new_node_data.obj[key]=value;
         }
     }
-    console.log(new_node_data)
-    let new_id = new_node_data.new_node_name;
-    nodes.add({
-        id: new_id,
-        label: new_node_data.new_node_name,
-        obj: {
-            type: new_node_data.type,
-        }
-    });
+    const new_node_object ={
+            id: new_node_data.new_node_name,
+            label: new_node_data.new_node_name,
+            obj: {
+                label: new_node_data.new_node_name,
+                ...new_node_data.obj
+            },
+    };
+    nodes.add(new_node_object);
     if (new_node_data.relation === 'to') {
         edges.add({
-            from: new_id,
+            from: new_node_data.new_node_name,
             to: new_node_data.parent_id,
             arrows: "to",
             color: {color: "blue"},
@@ -61,7 +58,7 @@ addNewNode.addEventListener("submit", function (e) {
     if (new_node_data.relation === 'from') {
         edges.add({
             from: new_node_data.parent_id,
-            to: new_id,
+            to: new_node_data.new_node_name,
             arrows: "to",
             color: {color: "blue"},
         });
