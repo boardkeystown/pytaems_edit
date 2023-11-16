@@ -55,6 +55,7 @@ editNodeProperties.addEventListener('submit', function (e) {
     new_node_properties.id = new_node_properties_options.new_name;
     new_node_properties.label = new_node_properties_options.new_name;
     new_node_properties.obj = new_node_properties_options.obj;
+    new_node_properties.obj.label = new_node_properties_options.new_name;
 
     nodes.add(new_node_properties);
 

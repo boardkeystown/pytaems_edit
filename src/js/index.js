@@ -29,7 +29,7 @@ const edge_types = {
     produces: "Produces",
 };
 
-let network;
+let network = null;
 
 function startNetwork(data) {
     const container = document.getElementById("network-view");
@@ -132,6 +132,7 @@ const nodes = new vis.DataSet([
         label: "node-0",
         obj: {
                 type: "Task_Group",
+                label: "node-0",
                 agent: null,
                 qaf: "q_sum_all",
                 arrival_time: null,

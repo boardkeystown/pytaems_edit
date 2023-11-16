@@ -62,7 +62,7 @@ function add_options_to_selection_drop_down(
  * @param top_px_str         "123px"
  * @param left_px_str        "123px"
  */
-function show_dialog_at(dialog_id_name_str,top_px_str,left_px_str) {
+function show_dialog_at(dialog_id_name_str, top_px_str, left_px_str) {
     $(dialog_id_name_str).toggle()
     const dialog = $(dialog_id_name_str);
     dialog.css('position', 'absolute');
@@ -178,7 +178,6 @@ function mk_hinders_properties() {
 }
 
 
-
 function mk_limits_properties() {
     return `
     <label> Name: </label>
@@ -274,193 +273,341 @@ const node_type_properties_key_names = {
     arrival_time: "arrival_time",
     earliest_start_time: "earliest_start_time",
     deadline: "deadline",
+    start_time: "start_time",
+    finish_time: "finish_time",
+    accrued_time: "accrued_time",
+    nonlocal_flag: "nonlocal_flag",
+    state: "state",
+    depleted_at: "depleted_at",
+    overloaded_at: "overloaded_at",
+
 };
 
 const qaf_type_properties_key_names = {
-    q_max:"q_max",
-    q_min:"q_min",
-    q_sum:"q_sum",
-    q_sum_all:"q_sum_all",
-    seq_min:"seq_min",
-    seq_max:"seq_max",
-    seq_sum:"seq_sum",
-    seq_last:"seq_last",
-    q_exactly_one:"q_exactly_one",
-    q_last:"q_last",
-    q_sigmoid:"q_sigmoid",
+    q_max: "q_max",
+    q_min: "q_min",
+    q_sum: "q_sum",
+    q_sum_all: "q_sum_all",
+    seq_min: "seq_min",
+    seq_max: "seq_max",
+    seq_sum: "seq_sum",
+    seq_last: "seq_last",
+    q_exactly_one: "q_exactly_one",
+    q_last: "q_last",
+    q_sigmoid: "q_sigmoid",
 };
 
-function mk_selected(
-    dict_to_check,
-    key) {
-    let result = '';
-    if (key !== null && dict_to_check.hasOwnProperty(key)) {
-        result = `selected`;
-    }
+function mk_selected(key1, key2) {
+    let result = (key1 === key2) ? `selected` : ``;
     return result;
 }
 
 function mk_qaf_drop_down_options(sno) {
     let qaf_type = null;
     if (sno && sno.hasOwnProperty("obj")) {
-        qaf_type = get_value(sno.obj,"qaf");
+        qaf_type = get_value(sno.obj, "qaf");
     }
     return `
     <label> qaf: </label>
-    <select id="qaf_selection" name="qaf" selected="q_sigmoid">
-        <option value="q_max"         ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > q_max          </option>
-        <option value="q_min"         ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > q_min          </option>
-        <option value="q_sum"         ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > q_sum          </option>
-        <option value="q_sum_all"     ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > q_sum_all      </option>
-        <option value="seq_min"       ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > seq_min        </option>
-        <option value="seq_max"       ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > seq_max        </option>
-        <option value="seq_sum"       ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > seq_sum        </option>
-        <option value="seq_last"      ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > seq_last       </option>
-        <option value="q_exactly_one" ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > q_exactly_one  </option>
-        <option value="q_last"        ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > q_last         </option>
-        <option value="q_sigmoid"     ${mk_selected(qaf_type_properties_key_names,qaf_type)}  > q_sigmoid      </option>
+    <select id="qaf_selection" name="qaf">
+        <option value="q_max"         ${mk_selected(qaf_type_properties_key_names.q_max, qaf_type)}  > q_max                  </option>
+        <option value="q_min"         ${mk_selected(qaf_type_properties_key_names.q_min, qaf_type)}  > q_min                  </option>
+        <option value="q_sum"         ${mk_selected(qaf_type_properties_key_names.q_sum, qaf_type)}  > q_sum                  </option>
+        <option value="q_sum_all"     ${mk_selected(qaf_type_properties_key_names.q_sum_all, qaf_type)}  > q_sum_all          </option>
+        <option value="seq_min"       ${mk_selected(qaf_type_properties_key_names.seq_min, qaf_type)}  > seq_min              </option>
+        <option value="seq_max"       ${mk_selected(qaf_type_properties_key_names.seq_max, qaf_type)}  > seq_max              </option>
+        <option value="seq_sum"       ${mk_selected(qaf_type_properties_key_names.seq_sum, qaf_type)}  > seq_sum              </option>
+        <option value="seq_last"      ${mk_selected(qaf_type_properties_key_names.seq_last, qaf_type)}  > seq_last            </option>
+        <option value="q_exactly_one" ${mk_selected(qaf_type_properties_key_names.q_exactly_one, qaf_type)}  > q_exactly_one  </option>
+        <option value="q_last"        ${mk_selected(qaf_type_properties_key_names.q_last, qaf_type)}  > q_last                </option>
+        <option value="q_sigmoid"     ${mk_selected(qaf_type_properties_key_names.q_sigmoid, qaf_type)}  > q_sigmoid          </option>
     </select>
     `;
 }
 
+/**
+ * @param value
+ * @returns {string} html input tag value or empty str
+ */
 function mk_input_value(value) {
     let result = '';
-    if (value !== null && value !== undefined && value !== '') {
+    if (value !== null &&
+        value !== undefined &&
+        value !== '') {
         result = `value=${value}`;
     }
     return result;
 }
 
+/**
+ * get value of dict or return some default value
+ * @param dict
+ * @param key
+ * @param default_value
+ * @returns {*|null}
+ */
 function get_value(
     dict,
     key,
-    default_value =null
+    default_value = null
 ) {
     return dict.hasOwnProperty(key) ? dict[key] : default_value;
 }
 
+/**
+ * @param sno selected node object
+ * @param object_key
+ * @param key
+ * @param default_value
+ * @returns {string}  return html tag input=value or empty strings
+ */
+function sno_value_to_html_input_tag(sno,object_key,key,default_value=null) {
+    return mk_input_value(
+        (sno && sno.hasOwnProperty(object_key)) ?
+            get_value(sno[object_key],key) : default_value
+    );
+}
+
 function mk_task_group_dialog_properties(sno) {
-    let agent = null;
-    let arrival_time = null;
-    let earliest_start_time = null;
-    let deadline = null;
-    if (sno && sno.hasOwnProperty("obj")) {
-        agent = get_value(sno.obj,node_type_properties_key_names.agent);
-        arrival_time = get_value(sno.obj,node_type_properties_key_names.arrival_time);
-        earliest_start_time = get_value(sno.obj,node_type_properties_key_names.arrival_time)
-        deadline = get_value(sno.obj,node_type_properties_key_names.deadline)
-    }
+    const set_input_as = {
+        agent: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.agent),
+        arrival_time: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.arrival_time),
+        earliest_start_time: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.earliest_start_time),
+        deadline: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.deadline),
+    };
     return `
             <label> Agent: </label>
-            <input type="text" name=${node_type_properties_key_names.agent} ${mk_input_value(agent)} pattern="^\\w+(-\\w+)*$">
+            <input  type="text" 
+                    name=${node_type_properties_key_names.agent}
+                    ${set_input_as.agent}
+                    pattern="^\\w+(-\\w+)*$"
+                    >
             <br>
            ` + mk_qaf_drop_down_options(sno) + `
             <br>
             <label> Arrival Time: </label>
-            <input type="number" step="any" name=${node_type_properties_key_names.arrival_time} ${mk_input_value(arrival_time)} >
+            <input  type="number"
+                    step="any"
+                    name=${node_type_properties_key_names.arrival_time}
+                    ${set_input_as.arrival_time}
+                    >
             <br>
             <label> Earliset Start Time: </label>
-            <input type="number" step="any" name=${node_type_properties_key_names.earliest_start_time} ${mk_input_value(earliest_start_time)} >
+            <input  type="number" 
+                    step="any" 
+                    name=${node_type_properties_key_names.earliest_start_time} 
+                    ${set_input_as.earliest_start_time} 
+                    >
             <br>
             <label> Deadline: </label>
-            <input type="number" step="any" name=${node_type_properties_key_names.deadline} ${mk_input_value(deadline)} >
+            <input  type="number" 
+                    step="any"
+                    name=${node_type_properties_key_names.deadline}
+                    ${set_input_as.deadline} 
+                    >
             `;
 }
 
 function mk_task_dialog_properties(sno) {
-    let agent = null;
-    let arrival_time = null;
-    let earliest_start_time = null;
-    let deadline = null;
-    if (sno && sno.hasOwnProperty("obj")) {
-        agent = get_value(sno.obj,node_type_properties_key_names.agent);
-        arrival_time = get_value(sno.obj,node_type_properties_key_names.arrival_time);
-        earliest_start_time = get_value(sno.obj,node_type_properties_key_names.arrival_time)
-        deadline = get_value(sno.obj,node_type_properties_key_names.deadline)
-    }
+    const set_input_as = {
+        agent: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.agent),
+        arrival_time: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.arrival_time),
+        earliest_start_time: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.earliest_start_time),
+        deadline: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.deadline),
+    };
     return `
             <label> Agent: </label>
-            <input type="text" name=${node_type_properties_key_names.agent} ${mk_input_value(agent)} pattern="^\\w+(-\\w+)*$">
+            <input  type="text"
+                    name=${node_type_properties_key_names.agent} 
+                    ${set_input_as.agent}
+                    pattern="^\\w+(-\\w+)*$">
             <br>
            ` + mk_qaf_drop_down_options(sno) + `
             <br>
             <label> Arrival Time: </label>
-            <input type="number" step="any" name=${node_type_properties_key_names.arrival_time} ${mk_input_value(arrival_time)} >
+            <input  type="number" 
+                    step="any" 
+                    name=${node_type_properties_key_names.arrival_time} 
+                    ${set_input_as.arrival_time} 
+                    >
             <br>
             <label> Earliset Start Time: </label>
-            <input type="number" step="any" name=${node_type_properties_key_names.earliest_start_time} ${mk_input_value(earliest_start_time)} >
+            <input  type="number" 
+                    step="any" 
+                    name=${node_type_properties_key_names.earliest_start_time} 
+                    ${set_input_as.earliest_start_time} 
+                    >
             <br>
             <label> Deadline: </label>
-            <input type="number" step="any" name=${node_type_properties_key_names.deadline} ${mk_input_value(deadline)} >
+            <input  type="number"
+                    step="any" 
+                    name=${node_type_properties_key_names.deadline} 
+                    ${set_input_as.deadline}
+                    >
             `;
 }
 
-function mk_method_dialog_properties() {
+function mk_method_dialog_properties(sno) {
+    const set_input_as = {
+        agent: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.agent),
+        arrival_time: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.arrival_time),
+        earliest_start_time: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.earliest_start_time),
+        deadline: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.deadline),
+        start_time:  sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.start_time),
+        finish_time:  sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.finish_time),
+        accrued_time:  sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.finish_time),
+        nonlocal_flag: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.nonlocal_flag),
+    };
     return `
             <label> Agent: </label>
-            <input type="text" name="agent">
+            <input type="text" 
+                   name=${node_type_properties_key_names.agent} 
+                   ${set_input_as.agent}    
+                   pattern="^\\w+(-\\w+)*$">
             <br>
             <label> Arrival Time: </label>
-            <input type="number" name="arrival_time">
+            <input  type="number" 
+                    step="any"
+                    name=${node_type_properties_key_names.arrival_time}
+                    ${set_input_as.arrival_time}
+                    >
             <br>
             <label> Earliset Start Time: </label>
-            <input type="number" name="earliset_start_time">
+            <input  type="number" 
+                    step="any"
+                    name=${node_type_properties_key_names.earliest_start_time}
+                    ${set_input_as.earliest_start_time}
+                    >
             <br>
             <label> Deadline: </label>
-            <input type="number" name="deadline">
+            <input  type="number" 
+                    step="any"
+                    name=${node_type_properties_key_names.deadline}
+                    ${set_input_as.deadline}
+                    >
             <br>
             <label> Start Time: </label>
-            <input type="number" name="start_time">
+            <input type="number"
+                   step="any" 
+                   name="start_time"
+                   ${set_input_as.start_time}
+                   >
             <br>
             <label> Finish Time: </label>
-            <input type="number" name="finish_time">
+            <input  type="number"
+                    step="any"
+                    name="finish_time"
+                    ${set_input_as.finish_time}
+                    >
             <br>
             <label> Accrued Time: </label>
-            <input type="number" name="accrued_time">
+            <input  type="number"
+                    step="any"
+                    name="accrued_time"
+                    ${set_input_as.accrued_time}
+                    >
             <br>
             <label> Nonlocal Flag: </label>
-            <input type="number" name="nonlocal_flag">
-            `;
-}
-function mk_consumable_resource_dialog_properties() {
-    return `
-            <label> Agent: </label>
-            <input type="text" name="agent">
-            <br>
-           ` + mk_qaf_drop_down_options() + `
-            <br>
-            <label> Arrival Time: </label>
-            <input type="number" name="arrival_time">
-            <br>
-            <label> State: </label>
-            <input type="number" name="state">
-            <br>
-            <label> Depleted At: </label>
-            <input type="number" name="depleted_at">
-            <br>
-            <label> Overloaded At: </label>
-            <input type="number" name="overloaded_at">        
+            <input  type="number" 
+                    name="nonlocal_flag"
+                    ${set_input_as.nonlocal_flag}
+                    >
             `;
 }
 
-function mk_none_consumable_resource_dialog_properties() {
+function mk_consumable_resource_dialog_properties(sno) {
+    const set_as_input = {
+        agent: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.agent),
+        arrival_time: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.arrival_time),
+        state: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.state),
+        depleted_at: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.depleted_at),
+        overloaded_at : sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.overloaded_at),
+    };
     return `
             <label> Agent: </label>
-            <input type="text" name="agent">
+            <input type="text"
+                   name=${node_type_properties_key_names.agent}
+                   ${set_as_input.agent}
+                   pattern="^\\w+(-\\w+)*$"
+                   >
             <br>
            ` + mk_qaf_drop_down_options() + `
             <br>
             <label> Arrival Time: </label>
-            <input type="number" name="arrival_time">
+            <input  type="number"
+                    step="any" 
+                    name=${node_type_properties_key_names.arrival_time}
+                    ${set_as_input.arrival_time}
+                    >
             <br>
             <label> State: </label>
-            <input type="number" name="state">
+            <input  type="number"
+                    step="any" 
+                    name=${node_type_properties_key_names.state}
+                    ${set_as_input.state}
+                    >
             <br>
             <label> Depleted At: </label>
-            <input type="number" name="depleted_at">
+            <input  type="number"
+                    step="any" 
+                    name=${node_type_properties_key_names.depleted_at}
+                    ${set_as_input.depleted_at}
+                    >
             <br>
             <label> Overloaded At: </label>
-            <input type="number" name="overloaded_at">        
+            <input  type="number"
+                    step="any" 
+                    name=${node_type_properties_key_names.overloaded_at}
+                    ${set_as_input.overloaded_at}
+                    >    
+            `;
+}
+
+function mk_none_consumable_resource_dialog_properties(sno) {
+    const set_as_input = {
+        agent: sno_value_to_html_input_tag(sno, "obj", node_type_properties_key_names.agent),
+        arrival_time: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.arrival_time),
+        state: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.state),
+        depleted_at: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.depleted_at),
+        overloaded_at: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.overloaded_at),
+    };
+    return `
+            <label> Agent: </label>
+            <input type="text"
+                   name=${node_type_properties_key_names.agent}
+                   ${set_as_input.agent}
+                   pattern="^\\w+(-\\w+)*$"
+                   >
+            <br>
+           ` + mk_qaf_drop_down_options() + `
+            <br>
+            <label> Arrival Time: </label>
+            <input  type="number"
+                    step="any" 
+                    name=${node_type_properties_key_names.arrival_time}
+                    ${set_as_input.arrival_time}
+                    >
+            <br>
+            <label> State: </label>
+            <input  type="number"
+                    step="any" 
+                    name=${node_type_properties_key_names.state}
+                    ${set_as_input.state}
+                    >
+            <br>
+            <label> Depleted At: </label>
+            <input  type="number"
+                    step="any" 
+                    name=${node_type_properties_key_names.depleted_at}
+                    ${set_as_input.depleted_at}
+                    >
+            <br>
+            <label> Overloaded At: </label>
+            <input  type="number"
+                    step="any" 
+                    name=${node_type_properties_key_names.overloaded_at}
+                    ${set_as_input.overloaded_at}
+                    >        
             `;
 }
 
@@ -484,23 +631,21 @@ function build_node_type_properties_dialog(
             propertiesDiv.append(mk_task_group_dialog_properties(selected_node_object));
             break;
         case node_types.task:
-            propertiesDiv.append(mk_task_dialog_properties());
+            propertiesDiv.append(mk_task_dialog_properties(selected_node_object));
             break;
         case node_types.method:
-            propertiesDiv.append(mk_method_dialog_properties());
+            propertiesDiv.append(mk_method_dialog_properties(selected_node_object));
             break;
         case node_types.consumable_resource:
-            propertiesDiv.append(mk_consumable_resource_dialog_properties());
+            propertiesDiv.append(mk_consumable_resource_dialog_properties(selected_node_object));
             break;
         case node_types.none_consumable_resource:
-            propertiesDiv.append(mk_none_consumable_resource_dialog_properties());
+            propertiesDiv.append(mk_none_consumable_resource_dialog_properties(selected_node_object));
             break;
         default:
             console.log(`${selected_type_str} is not a know node_type!`);
             break;
     }
-
-
 
 
 }
