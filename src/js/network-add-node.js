@@ -5,8 +5,20 @@ function addNodeBtn() {
     show_dialog_at("#add-node-dialog",
                     current_mouse_network_pos.top,
                     current_mouse_network_pos.left);
+
     const current_options = mk_nodes_into_dropdown_options(nodes);
-    add_options_to_selection_drop_down(add_node_drop_down_options, current_options, current_node)
+    add_options_to_selection_drop_down(
+        add_node_drop_down_options,
+        current_options,
+        current_node
+    );
+    const newNodeProperties_type = document.getElementById("new_node_type");
+    // set up properties
+    build_node_type_properties_dialog(
+        "#add-node-type-properties",
+        newNodeProperties_type.value,
+    );
+
 }
 
 const addNewNode = document.getElementById("add-node-dialog-input-form");
@@ -63,9 +75,8 @@ addNewNode.addEventListener("submit", function (e) {
             color: {color: "blue"},
         });
     }
-    // fix type if it changes
+
     refresh_nodes_types();
-    // reset and close dialog
     addNewNode.reset();
     $("#add-node-dialog").toggle()
 })
@@ -81,4 +92,12 @@ $(function () {
     $("#close-add-node-dialog").on("click", (e) => {
         $("#add-node-dialog").toggle();
     });
+    $("#new_node_type").on('change',(e) => {
+       let selectedType = $("#new_node_type option:selected").val();
+       build_node_type_properties_dialog(
+           "#add-node-type-properties",
+           selectedType
+       );
+    });
+
 })

@@ -74,12 +74,14 @@ editNodeProperties.addEventListener('submit', function (e) {
 });
 
 
+
+
+
 $(function () {
     $("#edit-node-dialog").draggable();
     $("#close-edit-node-dialog").on("click", (e) => {
         $("#edit-node-dialog").toggle();
     });
-
     $("#edit_node_type").on('change',(e) => {
         let selectedType = $("#edit_node_type option:selected").val();
         build_node_type_properties_dialog(

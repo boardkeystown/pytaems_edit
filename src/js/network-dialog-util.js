@@ -620,7 +620,7 @@ function mk_none_consumable_resource_dialog_properties(sno) {
 function build_node_type_properties_dialog(
     form_dialog_id_str,
     selected_type_str,
-    selected_node_object,
+    selected_node_object=null,
 ) {
     // get and empty out the properties dialog
     const propertiesDiv = $(form_dialog_id_str);
