@@ -43,27 +43,37 @@
     padding: 1px;
     border-radius: 6px;
 }
+
 .node-dialog-header {
     background-color: aqua;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    border-radius: 3px;
+    border-radius: 6px;
 }
+
 .node-dialog-header h4 {
     margin: 0;
     padding: 0;
 }
+
 .node-dialog-header button {
     border-radius: 5px;
     padding: 4px;
 }
+
 .node-dialog-header button:hover {
     background-color: brown;
 }
+
 .node-dialog-content {
     background-color: lightsteelblue;
     border-radius: 3px;
+    margin: 3px 1px 1px 5px;
+    padding-bottom: 4px;
 }
+
+
 
 #add-node-dialog {
     display: none;
