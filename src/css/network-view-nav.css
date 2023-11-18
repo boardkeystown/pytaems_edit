@@ -1,0 +1,31 @@
+.network-nav-banner {
+    background-color: black;
+    border-radius: 12px 0px 0px 12px;
+    padding: 0.1rem 0rem 0.2rem 0.4rem;
+
+    width: 100vw;
+    text-align: center;
+}
+.network-nav-banner-content {
+    background-color: #96c0fb;
+    border-radius: 12px 0px 0px 12px;
+}
+.network-nav-banner-content h3 {
+    color: white;
+    text-shadow: #110f0f 0.1rem 0.1rem 0.04rem;
+}
+.network-nav-banner-content-links {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.22);
+    border-radius: 0px 0px 0px 12px;
+}
+.network-nav-banner-content-links a {
+    color: white;
+    text-shadow: #110f0f 0.1rem 0.1rem 0.04rem;
+    font-size: large;
+    padding-right: 1vw;
+    padding-left: 1vw;
+}
+
+
+

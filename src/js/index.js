@@ -103,7 +103,8 @@ function startNetwork(data) {
         }
     })
 
-    function add_qaf_label(ctx,nodeId) {
+    //TODO: add node label
+    function add_qaf_label(ctx) {
         const node_positions = network.getPositions();
         Object.keys(node_positions).forEach(nodeId => {
             const position = node_positions[nodeId];
@@ -119,10 +120,42 @@ function startNetwork(data) {
             ctx.fillText(text, position.x-(textWidth/3),position.y+y_offset);
         });
     }
-    //TODO: add node label
+    function drawCustomEdgeLabels(ctx) {
+        const edgeData = network.body.edges;
+        for (const edgeId in edgeData) {
+            const edge = edgeData[edgeId];
+            if (edge.connected) {
+                const fromNode = edge.from;
+                const toNode = edge.to;
+
+                // Calculate midpoint of the edge
+                const midX = (fromNode.x + toNode.x) / 2;
+                const midY = (fromNode.y + toNode.y) / 2;
+
+                // Draw a shape or image as background
+                // Example: Draw a circle
+                ctx.beginPath();
+                ctx.arc(midX, midY, 10, 0, 2 * Math.PI, false);
+                ctx.fillStyle = 'lightblue';
+                ctx.fill();
+
+                // Draw the edge label
+                let labelText = "Hello World";
+                ctx.font = "8px Courier New";
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#0c0909';
+                ctx.fillText(labelText, midX, midY);
+            }
+        }
+    }
+
     // network.on("afterDrawing", function (ctx) {
-    //     //
+    //     // add_qaf_label(ctx);
+    //     // drawCustomEdgeLabels(ctx);
     // });
+
+
 }
 
 // set up nodes and edges
@@ -131,15 +164,30 @@ const nodes = new vis.DataSet([
         id: "node-0",
         label: "node-0",
         obj: {
-                type: "Task_Group",
-                label: "node-0",
-                agent: null,
-                qaf: "q_sum_all",
-                arrival_time: null,
-                earliest_start_time: null,
-                deadline: null,
-             },
+            type: "Task_Group",
+            label: "node-0",
+            agent: null,
+            qaf: "q_sum_all",
+            arrival_time: null,
+            earliest_start_time: null,
+            deadline: null
+        },
+        shape: "box"
     },
+    {
+        id: "node-1",
+        label: "node-1",
+        obj: {
+            label: "node-1",
+            type: "Task",
+            agent: "foobar",
+            qaf: "q_max",
+            arrival_time: "",
+            earliest_start_time: "",
+            deadline: ""
+        },
+        shape: "ellipse"
+    }
 ]);
 
 
@@ -149,7 +197,18 @@ const nodes = new vis.DataSet([
 //     // console.log('event:', event, 'properties:', properties, 'senderId:', senderId);
 // });
 
-const edges = new vis.DataSet([]);
+const edges = new vis.DataSet([
+    {
+        from: "node-0",
+        to: "node-1",
+        arrows: "to",
+        label: "text",
+        color: {
+            color: "blue"
+        },
+        id: "4cb0e914-85b7-4fb8-8cd8-931d08374c6c"
+    }
+]);
 
 // edges.on('*', function (event, properties, senderId) {
 //     // console.log('event:', event, 'properties:', properties, 'senderId:', senderId);

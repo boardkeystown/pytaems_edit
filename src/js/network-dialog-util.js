@@ -376,10 +376,10 @@ function sno_value_to_html_input_tag(sno,object_key,key,default_value=null) {
 function mk_input_label_pattern(input_name, set_input_as, label_name) {
     return `
     <div class="form-group row text-center node-dialog-form-padding">
-        <label class=" col-5 col-form-label font-weight-bold"> ${label_name} </label>
+        <label class="col-5 col-form-label col-form-label-sm font-weight-bold"> ${label_name} </label>
             <div class="col-7">
                 <input  
-                        class="form-control"
+                        class="form-control form-control"
                         type="text" 
                         name=${input_name}
                         ${set_input_as}
@@ -393,9 +393,9 @@ function mk_input_label_pattern(input_name, set_input_as, label_name) {
 function mk_input_number(input_name,set_input_as, label_name) {
     return `
     <div class="form-group row text-center node-dialog-form-padding">
-        <label class="col-5 col-form-label font-weight-bold"> ${label_name} </label>
+        <label class="col-5 col-form-label col-form-label-sm font-weight-bold"> ${label_name} </label>
         <div class="col-7">
-            <input  class="form-control"
+            <input  class="form-control form-control-sm"
                     type="number"
                     step="any"
                     name=${input_name}

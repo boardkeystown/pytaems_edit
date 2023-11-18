@@ -33,6 +33,7 @@
     <link rel="stylesheet" type="text/css" href="css/base.css"/>
     <link rel="stylesheet" type="text/css" href="css/network-view.css"/>
     <link rel="stylesheet" type="text/css" href="css/network-view-ui.css"/>
+    <link rel="stylesheet" type="text/css" href="css/network-view-nav.css"/>
     <!-- app scripts in order of include precedence -->
     <script defer src="js/index.js" type="text/javascript"></script>
     <script defer src="js/network-dialog-util.js" type="text/javascript"></script>
@@ -48,10 +49,30 @@
 </head>
 <body>
 
+<!-- Nav Bar -->
+<nav class="network-nav-banner">
+    <div class="network-nav-banner-content">
+        <h3> Pytaems Edit</h3>
+        <div class="network-nav-banner-content-links">
+            <a href="index.html">Home </a>
+            <a href="index.html">About </a>
+        </div>
+    </div>
+</nav>
+
+<!-- network view  -->
+
 <div class="main-container">
-    <input type="file" accept="text/json" id="upload-network-json-file">
-    <button id="save-to-json" onclick="save_network_btn()"> Save To Json</button>
-    <button id="toggle-physics" onclick="toggle_physics_btn()"> Toggle Physics</button>
+
+    <!-- buttons -->
+    <div class="d-flex justify-content-center p-1 ui-tools-background">
+        <button class="ui-tools-background-btn" id="toggle-physics" onclick="toggle_physics_btn()"> Physics Toggle</button>
+        <button class="ui-tools-background-btn" id="save-to-json" onclick="save_network_btn()"> Save </button>
+        <div class="ui-tools-background-input">
+            <input type="file" accept="text/json" id="upload-network-json-file">
+        </div>
+    </div>
+
     <div id="network-view"></div>
 </div>
 
@@ -91,7 +112,7 @@
             </div>
 
             <div class="form-group row text-center node-dialog-form-padding">
-                <label class=" col-4 col-form-label font-weight-bold" for="new_node_type">type</label>
+                <label class=" col-4 col-form-label col-from-label-sm font-weight-bold" for="new_node_type">type</label>
                 <div class="col">
                     <select class="custom-select custom-select-sm text-center" id="new_node_type" name="type">
                         <option value="Task"> Task</option>
@@ -144,16 +165,16 @@
         <form id="edit-node-dialog-input-form" onsubmit="" autocomplete="off">
 
             <div class="form-group row text-center node-dialog-form-padding">
-                <label class="col-4 col-form-label font-weight-bold" for="edit_node_name">name</label>
+                <label class="col-4 col-form-label col-form-label-sm font-weight-bold" for="edit_node_name">name</label>
                 <div class="col">
-                    <input type="text" id="edit_node_name" name="edit_node_name" required pattern="^\w+(-\w+)*$">
+                    <input class="form-control form-control-sm" type="text" id="edit_node_name" name="edit_node_name" required pattern="^\w+(-\w+)*$">
                 </div>
             </div>
 
             <div class="form-group row text-center node-dialog-form-padding">
-                <label class=" col-4 col-form-label font-weight-bold"> type </label>
+                <label class=" col-4 col-form-label col-form-label-sm font-weight-bold"> type </label>
                 <div class="col">
-                    <select id="edit_node_type" name="type">
+                    <select class="custom-select custom-select-sm" id="edit_node_type" name="type">
                         <option value="Task"> Task</option>
                         <option value="Task_Group"> Task Group</option>
                         <option value="Method"> Method</option>
@@ -188,14 +209,11 @@
     </div>
     <div class="node-dialog-content">
         <form id="remove-node-dialog-input-form" onsubmit="" autocomplete="off">
-
             <div class="form-group">
-                <select class="custom-select text-center" id="remove_node_available_nodes"
-                        name="remove_node_available_nodes">
+                <select class="custom-select custom-select-sm text-center" id="remove_node_available_nodes" name="remove_node_available_nodes">
                     <!-- filled from java script-->
                 </select>
             </div>
-
             <div class="form-group row d-flex justify-content-center" style="margin-bottom: 0;">
                 <div class="col-auto">
                     <input type="submit" value="Submit" class="btn btn-danger" value="Remove">
@@ -218,16 +236,16 @@
             <fieldset class="border border-dark p-1 m-1">
                 <legend class="w-auto small">relation</legend>
                 <div class="input-group">
-                    <select class="custom-select text-center w-100" id="connect_available_nodes_left"
+                    <select class="custom-select custom-select-sm text-center w-100" id="connect_available_nodes_left"
                             name="connect_available_nodes_left">
                         <!-- filled from java script-->
                     </select>
-                    <select class="custom-select text-center w-100" id="connect_node_relation" ,=""
+                    <select class="custom-select custom-select-sm text-center w-100" id="connect_node_relation" ,=""
                             name="connect_node_relation">
                         <option value="from" ,="" name="from"> from</option>
                         <option value="to" ,="" name="to"> to</option>
                     </select>
-                    <select class="custom-select text-center w-100" id="connect_available_nodes_right"
+                    <select class="custom-select custom-select-sm text-center w-100" id="connect_available_nodes_right"
                             name="connect_available_nodes_right">
                         <!-- filled from java script-->
                     </select>
@@ -255,7 +273,7 @@
         <form id="remove-edge-dialog-input-form" onsubmit="" autocomplete="off">
 
             <div class="form-group">
-                <select class="custom-select text-center" id="remove_edge_available" name="remove_edge_available">
+                <select class="custom-select  custom-select-smtext-center" id="remove_edge_available" name="remove_edge_available">
                     <!-- filled from java script-->
                 </select>
             </div>

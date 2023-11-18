@@ -1,3 +1,37 @@
+/* ui buttons tools */
+
+.ui-tools-background {
+    background-color: #95befa;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 12px 0px 0px 12px;
+}
+.ui-tools-background-btn {
+    font-weight: bold;
+    background-color: #f1f1f9;
+    margin-right: 1vw;
+}
+
+.ui-tools-background-input {
+    border: thin solid grey;
+    border-radius: 3px;
+}
+.ui-tools-background-input input::file-selector-button {
+    font-weight: bold;
+    background-color: #f1f1f9;
+}
+
+
+
+
+
+/*.ui-tools-background-bt1 {*/
+/*    */
+/*}*/
+
+
+
 /* right click menu */
 
 .context-menu {
