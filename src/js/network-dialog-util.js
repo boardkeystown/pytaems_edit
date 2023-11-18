@@ -308,20 +308,24 @@ function mk_qaf_drop_down_options(sno) {
         qaf_type = get_value(sno.obj, "qaf");
     }
     return `
-    <label> qaf: </label>
-    <select id="qaf_selection" name="qaf">
-        <option value="q_max"         ${mk_selected(qaf_type_properties_key_names.q_max, qaf_type)}  > q_max                  </option>
-        <option value="q_min"         ${mk_selected(qaf_type_properties_key_names.q_min, qaf_type)}  > q_min                  </option>
-        <option value="q_sum"         ${mk_selected(qaf_type_properties_key_names.q_sum, qaf_type)}  > q_sum                  </option>
-        <option value="q_sum_all"     ${mk_selected(qaf_type_properties_key_names.q_sum_all, qaf_type)}  > q_sum_all          </option>
-        <option value="seq_min"       ${mk_selected(qaf_type_properties_key_names.seq_min, qaf_type)}  > seq_min              </option>
-        <option value="seq_max"       ${mk_selected(qaf_type_properties_key_names.seq_max, qaf_type)}  > seq_max              </option>
-        <option value="seq_sum"       ${mk_selected(qaf_type_properties_key_names.seq_sum, qaf_type)}  > seq_sum              </option>
-        <option value="seq_last"      ${mk_selected(qaf_type_properties_key_names.seq_last, qaf_type)}  > seq_last            </option>
-        <option value="q_exactly_one" ${mk_selected(qaf_type_properties_key_names.q_exactly_one, qaf_type)}  > q_exactly_one  </option>
-        <option value="q_last"        ${mk_selected(qaf_type_properties_key_names.q_last, qaf_type)}  > q_last                </option>
-        <option value="q_sigmoid"     ${mk_selected(qaf_type_properties_key_names.q_sigmoid, qaf_type)}  > q_sigmoid          </option>
-    </select>
+    <div class="form-group row text-center node-dialog-form-padding">
+        <label class=" col-5 col-form-label font-weight-bold"> qaf </label>
+        <div class="col-7">
+            <select class="custom-select text-center" id="qaf_selection" name="qaf">
+                <option value="q_max"         ${mk_selected(qaf_type_properties_key_names.q_max, qaf_type)}  > q_max                  </option>
+                <option value="q_min"         ${mk_selected(qaf_type_properties_key_names.q_min, qaf_type)}  > q_min                  </option>
+                <option value="q_sum"         ${mk_selected(qaf_type_properties_key_names.q_sum, qaf_type)}  > q_sum                  </option>
+                <option value="q_sum_all"     ${mk_selected(qaf_type_properties_key_names.q_sum_all, qaf_type)}  > q_sum_all          </option>
+                <option value="seq_min"       ${mk_selected(qaf_type_properties_key_names.seq_min, qaf_type)}  > seq_min              </option>
+                <option value="seq_max"       ${mk_selected(qaf_type_properties_key_names.seq_max, qaf_type)}  > seq_max              </option>
+                <option value="seq_sum"       ${mk_selected(qaf_type_properties_key_names.seq_sum, qaf_type)}  > seq_sum              </option>
+                <option value="seq_last"      ${mk_selected(qaf_type_properties_key_names.seq_last, qaf_type)}  > seq_last            </option>
+                <option value="q_exactly_one" ${mk_selected(qaf_type_properties_key_names.q_exactly_one, qaf_type)}  > q_exactly_one  </option>
+                <option value="q_last"        ${mk_selected(qaf_type_properties_key_names.q_last, qaf_type)}  > q_last                </option>
+                <option value="q_sigmoid"     ${mk_selected(qaf_type_properties_key_names.q_sigmoid, qaf_type)}  > q_sigmoid          </option>
+            </select>
+        </div>
+    </div>
     `;
 }
 
@@ -368,6 +372,40 @@ function sno_value_to_html_input_tag(sno,object_key,key,default_value=null) {
     );
 }
 
+
+function mk_input_label_pattern(input_name, set_input_as, label_name) {
+    return `
+    <div class="form-group row text-center node-dialog-form-padding">
+        <label class=" col-5 col-form-label font-weight-bold"> ${label_name} </label>
+            <div class="col-7">
+                <input  
+                        class="form-control"
+                        type="text" 
+                        name=${input_name}
+                        ${set_input_as}
+                        pattern="^\\w+(-\\w+)*$"
+                >
+            </div>                 
+    </div>
+    `;
+}
+
+function mk_input_number(input_name,set_input_as, label_name) {
+    return `
+    <div class="form-group row text-center node-dialog-form-padding">
+        <label class="col-5 col-form-label font-weight-bold"> ${label_name} </label>
+        <div class="col-7">
+            <input  class="form-control"
+                    type="number"
+                    step="any"
+                    name=${input_name}
+                    ${set_input_as}
+            >    
+        </div>                 
+    </div>
+    `;
+}
+
 function mk_task_group_dialog_properties(sno) {
     const set_input_as = {
         agent: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.agent),
@@ -376,35 +414,11 @@ function mk_task_group_dialog_properties(sno) {
         deadline: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.deadline),
     };
     return `
-            <label> Agent: </label>
-            <input  type="text" 
-                    name=${node_type_properties_key_names.agent}
-                    ${set_input_as.agent}
-                    pattern="^\\w+(-\\w+)*$"
-                    >
-            <br>
-           ` + mk_qaf_drop_down_options(sno) + `
-            <br>
-            <label> Arrival Time: </label>
-            <input  type="number"
-                    step="any"
-                    name=${node_type_properties_key_names.arrival_time}
-                    ${set_input_as.arrival_time}
-                    >
-            <br>
-            <label> Earliset Start Time: </label>
-            <input  type="number" 
-                    step="any" 
-                    name=${node_type_properties_key_names.earliest_start_time} 
-                    ${set_input_as.earliest_start_time} 
-                    >
-            <br>
-            <label> Deadline: </label>
-            <input  type="number" 
-                    step="any"
-                    name=${node_type_properties_key_names.deadline}
-                    ${set_input_as.deadline} 
-                    >
+            ${mk_input_label_pattern(node_type_properties_key_names.agent,set_input_as.agent,"agent")}
+            ${mk_qaf_drop_down_options(sno)} 
+            ${mk_input_number(node_type_properties_key_names.arrival_time,set_input_as.arrival_time, "arrival time")}
+            ${mk_input_number(node_type_properties_key_names.earliest_start_time,set_input_as.earliest_start_time, "earliest start time")}
+            ${mk_input_number(node_type_properties_key_names.deadline,set_input_as.deadline, "deadline")}
             `;
 }
 
@@ -416,36 +430,14 @@ function mk_task_dialog_properties(sno) {
         deadline: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.deadline),
     };
     return `
-            <label> Agent: </label>
-            <input  type="text"
-                    name=${node_type_properties_key_names.agent} 
-                    ${set_input_as.agent}
-                    pattern="^\\w+(-\\w+)*$">
-            <br>
-           ` + mk_qaf_drop_down_options(sno) + `
-            <br>
-            <label> Arrival Time: </label>
-            <input  type="number" 
-                    step="any" 
-                    name=${node_type_properties_key_names.arrival_time} 
-                    ${set_input_as.arrival_time} 
-                    >
-            <br>
-            <label> Earliset Start Time: </label>
-            <input  type="number" 
-                    step="any" 
-                    name=${node_type_properties_key_names.earliest_start_time} 
-                    ${set_input_as.earliest_start_time} 
-                    >
-            <br>
-            <label> Deadline: </label>
-            <input  type="number"
-                    step="any" 
-                    name=${node_type_properties_key_names.deadline} 
-                    ${set_input_as.deadline}
-                    >
+            ${mk_input_label_pattern(node_type_properties_key_names.agent,set_input_as.agent,"agent")}
+            ${mk_qaf_drop_down_options(sno)}
+            ${mk_input_number(node_type_properties_key_names.arrival_time,set_input_as.arrival_time, "arrival time")}
+            ${mk_input_number(node_type_properties_key_names.earliest_start_time,set_input_as.earliest_start_time, "earliest start time")}
+            ${mk_input_number(node_type_properties_key_names.deadline,set_input_as.deadline, "deadline")}
             `;
 }
+
 
 function mk_method_dialog_properties(sno) {
     const set_input_as = {
@@ -459,60 +451,15 @@ function mk_method_dialog_properties(sno) {
         nonlocal_flag: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.nonlocal_flag),
     };
     return `
-            <label> Agent: </label>
-            <input type="text" 
-                   name=${node_type_properties_key_names.agent} 
-                   ${set_input_as.agent}    
-                   pattern="^\\w+(-\\w+)*$">
-            <br>
-            <label> Arrival Time: </label>
-            <input  type="number" 
-                    step="any"
-                    name=${node_type_properties_key_names.arrival_time}
-                    ${set_input_as.arrival_time}
-                    >
-            <br>
-            <label> Earliset Start Time: </label>
-            <input  type="number" 
-                    step="any"
-                    name=${node_type_properties_key_names.earliest_start_time}
-                    ${set_input_as.earliest_start_time}
-                    >
-            <br>
-            <label> Deadline: </label>
-            <input  type="number" 
-                    step="any"
-                    name=${node_type_properties_key_names.deadline}
-                    ${set_input_as.deadline}
-                    >
-            <br>
-            <label> Start Time: </label>
-            <input type="number"
-                   step="any" 
-                   name="start_time"
-                   ${set_input_as.start_time}
-                   >
-            <br>
-            <label> Finish Time: </label>
-            <input  type="number"
-                    step="any"
-                    name="finish_time"
-                    ${set_input_as.finish_time}
-                    >
-            <br>
-            <label> Accrued Time: </label>
-            <input  type="number"
-                    step="any"
-                    name="accrued_time"
-                    ${set_input_as.accrued_time}
-                    >
-            <br>
-            <label> Nonlocal Flag: </label>
-            <input  type="number" 
-                    name="nonlocal_flag"
-                    ${set_input_as.nonlocal_flag}
-                    >
-            `;
+            ${mk_input_label_pattern(node_type_properties_key_names.agent,set_input_as.agent,"agent")}
+            ${mk_input_number(node_type_properties_key_names.arrival_time,set_input_as.arrival_time, "arrival time")}
+            ${mk_input_number(node_type_properties_key_names.earliest_start_time,set_input_as.earliest_start_time, "earliest start time")}
+            ${mk_input_number(node_type_properties_key_names.deadline,set_input_as.deadline, "deadline")}
+            ${mk_input_number(node_type_properties_key_names.start_time,set_input_as.start_time, "start time")}
+            ${mk_input_number(node_type_properties_key_names.finish_time,set_input_as.finish_time, "finish time")}
+            ${mk_input_number(node_type_properties_key_names.accrued_time,set_input_as.accrued_time, "accured time")}
+            ${mk_input_number(node_type_properties_key_names.nonlocal_flag,set_input_as.nonlocal_flag, "nonlocal flag")}
+        `;
 }
 
 function mk_consumable_resource_dialog_properties(sno) {
@@ -524,42 +471,12 @@ function mk_consumable_resource_dialog_properties(sno) {
         overloaded_at : sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.overloaded_at),
     };
     return `
-            <label> Agent: </label>
-            <input type="text"
-                   name=${node_type_properties_key_names.agent}
-                   ${set_as_input.agent}
-                   pattern="^\\w+(-\\w+)*$"
-                   >
-            <br>
-           ` + mk_qaf_drop_down_options() + `
-            <br>
-            <label> Arrival Time: </label>
-            <input  type="number"
-                    step="any" 
-                    name=${node_type_properties_key_names.arrival_time}
-                    ${set_as_input.arrival_time}
-                    >
-            <br>
-            <label> State: </label>
-            <input  type="number"
-                    step="any" 
-                    name=${node_type_properties_key_names.state}
-                    ${set_as_input.state}
-                    >
-            <br>
-            <label> Depleted At: </label>
-            <input  type="number"
-                    step="any" 
-                    name=${node_type_properties_key_names.depleted_at}
-                    ${set_as_input.depleted_at}
-                    >
-            <br>
-            <label> Overloaded At: </label>
-            <input  type="number"
-                    step="any" 
-                    name=${node_type_properties_key_names.overloaded_at}
-                    ${set_as_input.overloaded_at}
-                    >    
+            ${mk_input_label_pattern(node_type_properties_key_names.agent,set_as_input.agent,"agent")}
+            ${mk_qaf_drop_down_options()}
+            ${mk_input_number(node_type_properties_key_names.arrival_time,set_as_input.arrival_time, "arrival time")}
+            ${mk_input_number(node_type_properties_key_names.state,set_as_input.state, "state")}
+            ${mk_input_number(node_type_properties_key_names.depleted_at,set_as_input.depleted_at, "depleted at")}
+            ${mk_input_number(node_type_properties_key_names.overloaded_at,set_as_input.overloaded_at, "overloaded at")}
             `;
 }
 
@@ -572,42 +489,12 @@ function mk_none_consumable_resource_dialog_properties(sno) {
         overloaded_at: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.overloaded_at),
     };
     return `
-            <label> Agent: </label>
-            <input type="text"
-                   name=${node_type_properties_key_names.agent}
-                   ${set_as_input.agent}
-                   pattern="^\\w+(-\\w+)*$"
-                   >
-            <br>
-           ` + mk_qaf_drop_down_options() + `
-            <br>
-            <label> Arrival Time: </label>
-            <input  type="number"
-                    step="any" 
-                    name=${node_type_properties_key_names.arrival_time}
-                    ${set_as_input.arrival_time}
-                    >
-            <br>
-            <label> State: </label>
-            <input  type="number"
-                    step="any" 
-                    name=${node_type_properties_key_names.state}
-                    ${set_as_input.state}
-                    >
-            <br>
-            <label> Depleted At: </label>
-            <input  type="number"
-                    step="any" 
-                    name=${node_type_properties_key_names.depleted_at}
-                    ${set_as_input.depleted_at}
-                    >
-            <br>
-            <label> Overloaded At: </label>
-            <input  type="number"
-                    step="any" 
-                    name=${node_type_properties_key_names.overloaded_at}
-                    ${set_as_input.overloaded_at}
-                    >        
+            ${mk_input_label_pattern(node_type_properties_key_names.agent,set_as_input.agent,"agent")}
+            ${mk_qaf_drop_down_options()}
+            ${mk_input_number(node_type_properties_key_names.arrival_time,set_as_input.arrival_time, "arrival time")}
+            ${mk_input_number(node_type_properties_key_names.state,set_as_input.state, "state")}
+            ${mk_input_number(node_type_properties_key_names.depleted_at,set_as_input.depleted_at, "depleted at")}
+            ${mk_input_number(node_type_properties_key_names.overloaded_at,set_as_input.overloaded_at, "overloaded at")}
             `;
 }
 

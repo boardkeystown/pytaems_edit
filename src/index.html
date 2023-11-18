@@ -74,72 +74,107 @@
 </div>
 
 <!--add dialog -->
-
 <div id="add-node-dialog" class="node-dialog">
     <div class="node-dialog-header">
         <h4> Add Node </h4>
         <button id="close-add-node-dialog">X</button>
     </div>
     <div class="node-dialog-content">
-        <form id="add-node-dialog-input-form"
-              onsubmit=""
-              autocomplete="off">
-            <label for="new_node_name">Name:</label>
-            <input type="text" id="new_node_name" name="new_node_name" required pattern="^\w+(-\w+)*$">
-            <br>
-            <select id="new_node_relation" , name="new_node_relation">
-                <option value="from" > from</option>
-                <option value="to" > to</option>
-                <option value="none" > none</option>
-            </select>
-            <select id="new_node_available_nodes" name="new_node_available_nodes">
-                <!-- filled from java script-->
-            </select>
-            <br>
-            <label for="new_node_type">Type:</label>
-            <select id="new_node_type" name="type">
-                <option value="Task" > Task</option>
-                <option value="Task_Group" > Task Group</option>
-                <option value="Method" > Method</option>
-                <option value="Consumable_Resource" > Consumable Resource</option>
-                <option value="None_Consumable_Resource" > None Consumable Resource</option>
-            </select>
-            <br>
-            <div id="add-node-type-properties">
-                <!-- filled out by javascript -->
+        <form id="add-node-dialog-input-form" onsubmit="" autocomplete="off">
+
+            <div class="form-group row text-center node-dialog-form-padding">
+                <label class="col-4 col-form-label col-form-label-sm font-weight-bold" for="new_node_name">name</label>
+                <div class="col">
+                    <input class="form-control form-control-sm" type="text" id="new_node_name" name="new_node_name" required
+                           pattern="^\w+(-\w+)*$">
+                </div>
             </div>
-            <input type="submit" value="Submit">
+
+            <div class="form-group row text-center node-dialog-form-padding">
+                <label class=" col-4 col-form-label font-weight-bold" for="new_node_type">type</label>
+                <div class="col">
+                    <select class="custom-select custom-select-sm text-center" id="new_node_type" name="type">
+                        <option value="Task"> Task</option>
+                        <option value="Task_Group"> Task Group</option>
+                        <option value="Method"> Method</option>
+                        <option value="Consumable_Resource"> Consumable Resource</option>
+                        <option value="None_Consumable_Resource"> None Consumable Resource</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row text-center node-dialog-form-padding">
+                <label class="col-4 col-form-label col-form-label-sm font-weight-bold text-right" style="padding-top: 1.5rem"
+                       for="new_node_type">relation</label>
+                <div class="col">
+                    <select class="custom-select custom-select-sm text-center" id="new_node_relation" name="new_node_relation">
+                        <option value="from"> from</option>
+                        <option value="to"> to</option>
+                        <option value="none"> none</option>
+                    </select>
+                    <select class="custom-select custom-select-sm text-center" id="new_node_available_nodes"
+                            name="new_node_available_nodes">
+                        <!-- filled from java script-->
+                        <option value="node-0">node-0</option>
+                    </select>
+                </div>
+            </div>
+            <fieldset class="border border-dark p-1 m-1 node-dialog-form-padding">
+                <legend class="w-auto small">properties</legend>
+                <div id="add-node-type-properties">
+                    <!-- filled out by javascript -->
+                </div>
+            </fieldset>
+            <div class="form-group row d-flex justify-content-center" style="margin-bottom: 0;">
+                <div class="col-auto">
+                    <input type="submit" value="Submit" class="btn btn-primary">
+                </div>
+            </div>
         </form>
     </div>
 </div>
 
 <!--edit node dialog -->
-
 <div id="edit-node-dialog" class="node-dialog">
     <div class="node-dialog-header">
         <h4> Edit Node </h4>
         <button id="close-edit-node-dialog">X</button>
     </div>
     <div class="node-dialog-content">
-        <form id="edit-node-dialog-input-form"
-              onsubmit=""
-              autocomplete="off">
-            <label for="edit_node_name">Name:</label>
-            <input type="text" id="edit_node_name" name="edit_node_name" required pattern="^\w+(-\w+)*$">
-            <br>
-            <label for="edit_node_type">Type:</label>
-            <select id="edit_node_type" name="type">
-                <option value="Task" > Task</option>
-                <option value="Task_Group" > Task Group</option>
-                <option value="Method" > Method</option>
-                <option value="Consumable_Resource" > Consumable Resource</option>
-                <option value="None_Consumable_Resource" > None Consumable Resource</option>
-            </select>
-            <div id="edit-node-type-properties">
-                <!-- filled out by javascript -->
+        <form id="edit-node-dialog-input-form" onsubmit="" autocomplete="off">
+
+            <div class="form-group row text-center node-dialog-form-padding">
+                <label class="col-4 col-form-label font-weight-bold" for="edit_node_name">name</label>
+                <div class="col">
+                    <input type="text" id="edit_node_name" name="edit_node_name" required pattern="^\w+(-\w+)*$">
+                </div>
             </div>
-            <br>
-            <input type="submit" value="Submit">
+
+            <div class="form-group row text-center node-dialog-form-padding">
+                <label class=" col-4 col-form-label font-weight-bold"> type </label>
+                <div class="col">
+                    <select id="edit_node_type" name="type">
+                        <option value="Task"> Task</option>
+                        <option value="Task_Group"> Task Group</option>
+                        <option value="Method"> Method</option>
+                        <option value="Consumable_Resource"> Consumable Resource</option>
+                        <option value="None_Consumable_Resource"> None Consumable Resource</option>
+                    </select>
+                </div>
+            </div>
+
+            <fieldset class="border border-dark p-1 m-1 node-dialog-form-padding">
+                <legend class="w-auto small">properties</legend>
+                <div id="edit-node-type-properties">
+                    <!-- filled out by javascript -->
+                </div>
+            </fieldset>
+
+            <div class="form-group row d-flex justify-content-center" style="margin-bottom: 0;">
+                <div class="col-auto">
+                    <input type="submit" value="Submit" class="btn btn-primary">
+                </div>
+            </div>
         </form>
     </div>
 </div>
@@ -152,16 +187,21 @@
         <button id="close-remove-node-dialog">X</button>
     </div>
     <div class="node-dialog-content">
-        <form id="remove-node-dialog-input-form"
-              onsubmit=""
-              autocomplete="off">
-            <label for="remove_node_available_nodes">Name: </label>
-            <select id="remove_node_available_nodes" name="remove_node_available_nodes">
-                <!-- filled from java script-->
-            </select>
-            <br>
-            <br>
-            <input style="color: red; font-weight: bold" type="submit" value="Remove">
+        <form id="remove-node-dialog-input-form" onsubmit="" autocomplete="off">
+
+            <div class="form-group">
+                <select class="custom-select text-center" id="remove_node_available_nodes"
+                        name="remove_node_available_nodes">
+                    <!-- filled from java script-->
+                </select>
+            </div>
+
+            <div class="form-group row d-flex justify-content-center" style="margin-bottom: 0;">
+                <div class="col-auto">
+                    <input type="submit" value="Submit" class="btn btn-danger" value="Remove">
+                </div>
+            </div>
+
         </form>
     </div>
 </div>
@@ -174,23 +214,32 @@
         <button id="close-connect-node-dialog">X</button>
     </div>
     <div class="node-dialog-content">
-        <form id="connect-node-dialog-input-form"
-              onsubmit=""
-              autocomplete="off">
-            <label for="connect_available_nodes_left">Name: </label>
-            <select id="connect_available_nodes_left" name="connect_available_nodes_left">
-                <!-- filled from java script-->
-            </select>
-            <select id="connect_node_relation" , name="connect_node_relation">
-                <option value="to"> to</option>
-                <option value="from"> from</option>
-            </select>
-            <label for="connect_available_nodes_right">Name: </label>
-            <select id="connect_available_nodes_right" name="connect_available_nodes_right">
-                <!-- filled from java script-->
-            </select>
-            <br>
-            <input type="submit" value="Submit">
+        <form id="connect-node-dialog-input-form" onsubmit="" autocomplete="off">
+            <fieldset class="border border-dark p-1 m-1">
+                <legend class="w-auto small">relation</legend>
+                <div class="input-group">
+                    <select class="custom-select text-center w-100" id="connect_available_nodes_left"
+                            name="connect_available_nodes_left">
+                        <!-- filled from java script-->
+                    </select>
+                    <select class="custom-select text-center w-100" id="connect_node_relation" ,=""
+                            name="connect_node_relation">
+                        <option value="from" ,="" name="from"> from</option>
+                        <option value="to" ,="" name="to"> to</option>
+                    </select>
+                    <select class="custom-select text-center w-100" id="connect_available_nodes_right"
+                            name="connect_available_nodes_right">
+                        <!-- filled from java script-->
+                    </select>
+                </div>
+            </fieldset>
+
+            <div class="form-group row d-flex justify-content-center" style="margin-bottom: 0;">
+                <div class="col-auto">
+                    <input type="submit" value="Submit" class="btn btn-primary">
+                </div>
+            </div>
+
         </form>
     </div>
 </div>
@@ -203,16 +252,20 @@
         <button id="close-remove-edge-dialog">X</button>
     </div>
     <div class="node-dialog-content">
-        <form id="remove-edge-dialog-input-form"
-              onsubmit=""
-              autocomplete="off">
-            <label for="remove_edge_available">Edge: </label>
-            <select id="remove_edge_available" name="remove_edge_available">
-                <!-- filled from java script-->
-            </select>
-            <br>
-            <br>
-            <input style="color: red; font-weight: bold" type="submit" value="Remove">
+        <form id="remove-edge-dialog-input-form" onsubmit="" autocomplete="off">
+
+            <div class="form-group">
+                <select class="custom-select text-center" id="remove_edge_available" name="remove_edge_available">
+                    <!-- filled from java script-->
+                </select>
+            </div>
+
+            <div class="form-group row d-flex justify-content-center" style="margin-bottom: 0;">
+                <div class="col-auto">
+                    <input type="submit" value="Submit" class="btn btn-danger" value="Remove">
+                </div>
+            </div>
+
         </form>
     </div>
 </div>
@@ -225,13 +278,13 @@
         <button id="close-edit-edge-dialog">X</button>
     </div>
     <div class="node-dialog-content">
-        <form id="edit-edge-dialog-input-form"
-              onsubmit=""
-              autocomplete="off">
+        <form id="edit-edge-dialog-input-form" onsubmit="" autocomplete="off">
+
             <label for="edit_edge_available">Edge: </label>
             <select id="edit_edge_available" name="edit_edge_available">
                 <!-- filled from java script-->
             </select>
+
             <br>
             <label for="edit_edge_type">Type: </label>
             <select id="edit_edge_type" name="edit_edge_type">

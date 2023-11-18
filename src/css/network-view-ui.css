@@ -19,7 +19,7 @@
     user-select: none;
 }
 .context-menu-li:hover {
-    background-color: aqua;
+    background-color: #96c0fb;
     border-width: 1px;
     border-style: dotted;
     border-color: black;
@@ -41,25 +41,32 @@
     width: -moz-fit-content;
     margin: 1px;
     padding: 1px;
-    border-radius: 6px;
+    border-radius: 12px 0px 0px 12px;
 }
 
 .node-dialog-header {
-    background-color: aqua;
+    background-color: #96c0fb;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-radius: 6px;
+    border-radius: 12px;
+    cursor: move;
 }
 
 .node-dialog-header h4 {
     margin: 0;
-    padding: 0;
+    padding-left: 10px;
+    color: white;
+    text-shadow: #110f0f 0.1rem 0.1rem 0.04rem;
+    font-weight: bolder;
 }
 
 .node-dialog-header button {
-    border-radius: 5px;
+    font-weight: bolder;
+    border-radius: 12px 0px 0px 12px;
     padding: 4px;
+    height: auto;
+    width: 40px;
 }
 
 .node-dialog-header button:hover {
@@ -67,11 +74,23 @@
 }
 
 .node-dialog-content {
-    background-color: lightsteelblue;
-    border-radius: 3px;
-    margin: 3px 1px 1px 5px;
+    background-color: #f3f3fa;
+    border-radius: 12px 0px 0px 12px;
+    margin: 0.3rem 0.1rem 0.1rem 0.25rem;
     padding-bottom: 4px;
 }
+
+.node-dialog-content fieldset {
+    border-radius: 12px 0px 0px 12px;
+}
+
+
+.node-dialog-form-padding {
+    margin-bottom: 0px;
+    margin-top: 0;
+}
+
+
 
 
 
