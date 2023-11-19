@@ -73,153 +73,153 @@ function show_dialog_at(dialog_id_name_str, top_px_str, left_px_str) {
 
 /*  edge type dialog properties  */
 
+const edge_type_properties_key_names = {
+    label: "label",
+    agent: "agent",
+    from_outcomes: "from_outcomes",
+    model: "model",
+    produces: "produces",
+    delay: "delay",
+    quality_power:"quality_power",
+    duration_power:"duration_power",
+    cost_power: "cost_power",
+    delay: "delay"
+};
 
-function mk_consume_properties() {
+function mk_consume_properties(seo) {
+    const set_input_as = {
+        label: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.label),
+        agent: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.agent),
+        from_outcomes: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.from_outcomes),
+        model: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.model),
+        produces: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.produces),
+    };
     return `
-    <label> Name: </label>
-    <input type="text" name="label">
-    <br>
-    <label> Agent: </label>
-    <input type="text" name="agent">
-    <br>
-    <label> From Outcomes: </label>
-    <input type="text" name="from_outcome">
-    <br>
-    <label> Model: </label>
-    <input type="text" name="model">
-    <br>
-    <label> Produces: </label>
-    <input type="text" name="produces">
+    ${mk_input_label_pattern(edge_type_properties_key_names.label,set_input_as.label,"label")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.agent,set_input_as.agent,"agent")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.from_outcomes,set_input_as.from_outcomes,"from_outcomes")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.model,set_input_as.model,"model")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.produces,set_input_as.produces,"produces")}
     `;
 }
 
-function mk_enables_properties() {
+function mk_enables_properties(seo) {
+    const set_input_as = {
+        label: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.label),
+        agent: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.agent),
+        from_outcomes: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.from_outcomes),
+        delay: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.delay),
+    };
     return `
-    <label> Name: </label>
-    <input type="text" name="label">
-    <br>
-    <label> Agent: </label>
-    <input type="text" name="agent">
-    <br>
-    <label> From Outcomes: </label>
-    <input type="text" name="from_outcome">
-    <br>
-    <label> Delay: </label>
-    <input type="text" name="delay">
+    ${mk_input_label_pattern(edge_type_properties_key_names.label,set_input_as.label,"label")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.agent,set_input_as.agent,"agent")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.from_outcomes,set_input_as.from_outcomes,"from outcomes")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.delay,set_input_as.delay,"delay")}
     `;
 }
 
-function mk_disables_properties() {
+function mk_disables_properties(seo) {
+    const set_input_as = {
+        label: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.label),
+        agent: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.agent),
+        from_outcomes: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.from_outcomes),
+        delay: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.delay),
+    };
     return `
-    <label> Name: </label>
-    <input type="text" name="label">
-    <br>
-    <label> Agent: </label>
-    <input type="text" name="agent">
-    <br>
-    <label> From Outcomes: </label>
-    <input type="text" name="from_outcome">
-    <br>
-    <label> Delay: </label>
-    <input type="text" name="delay">
-    `;
-}
-
-
-function mk_facilitates_properties() {
-    return `
-    <label> Name: </label>
-    <input type="text" name="label">
-    <br>
-    <label> Agent: </label>
-    <input type="text" name="agent">
-    <br>
-    <label> From Outcomes: </label>
-    <input type="text" name="from_outcome">
-    <br>
-    <label> Quality Power: </label>
-    <input type="text" name="quality_power">
-    <br>
-    <label> Duration Power: </label>
-    <input type="text" name="duration_power">
-    <br>
-    <label> Cost Power: </label>
-    <input type="text" name="cost_power">
-    <br>
-    <label> Delay: </label>
-    <input type="text" name="delay">
+    ${mk_input_label_pattern(edge_type_properties_key_names.label,set_input_as.label,"label")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.agent,set_input_as.agent,"agent")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.from_outcomes,set_input_as.from_outcomes,"from outcomes")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.delay,set_input_as.delay,"delay")}
     `;
 }
 
 
-function mk_hinders_properties() {
+function mk_facilitates_properties(seo) {
+    const set_input_as = {
+        label: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.label),
+        agent: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.agent),
+        from_outcomes: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.from_outcomes),
+        quality_power: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.quality_power),
+        duration_power: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.duration_power),
+        cost_power: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.cost_power),
+        delay: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.delay),
+    };
     return `
-    <label> Name: </label>
-    <input type="text" name="label">
-    <br>
-    <label> Agent: </label>
-    <input type="text" name="agent">
-    <br>
-    <label> From Outcomes: </label>
-    <input type="text" name="from_outcome">
-    <br>
-    <label> Quality Power: </label>
-    <input type="text" name="quality_power">
-    <br>
-    <label> Duration Power: </label>
-    <input type="text" name="duration_power">
-    <br>
-    <label> Cost Power: </label>
-    <input type="text" name="cost_power">
-    <br>
-    <label> Delay: </label>
-    <input type="text" name="delay">
+    ${mk_input_label_pattern(edge_type_properties_key_names.label,set_input_as.label,"label")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.agent,set_input_as.agent,"agent")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.from_outcomes,set_input_as.from_outcomes,"from outcomes")}
+    
+    ${mk_input_label_pattern(edge_type_properties_key_names.quality_power,set_input_as.quality_power,"quality power")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.duration_power,set_input_as.duration_power,"duration power")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.cost_power,set_input_as.cost_power,"cost power")}
+    
+    ${mk_input_label_pattern(edge_type_properties_key_names.delay,set_input_as.delay,"delay")}
     `;
 }
 
 
-function mk_limits_properties() {
+function mk_hinders_properties(seo) {
+    const set_input_as = {
+        label: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.label),
+        agent: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.agent),
+        from_outcomes: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.from_outcomes),
+        quality_power: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.quality_power),
+        duration_power: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.duration_power),
+        cost_power: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.cost_power),
+        delay: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.delay),
+    };
     return `
-    <label> Name: </label>
-    <input type="text" name="label">
-    <br>
-    <label> Agent: </label>
-    <input type="text" name="agent">
-    <br>
-    <label> From Outcomes: </label>
-    <input type="text" name="from_outcome">
-    <br>
-    <label> Quality Power: </label>
-    <input type="text" name="quality_power">
-    <br>
-    <label> Duration Power: </label>
-    <input type="text" name="duration_power">
-    <br>
-    <label> Cost Power: </label>
-    <input type="text" name="cost_power">
-    <br>
-    <label> Delay: </label>
-    <input type="text" name="delay">
+    ${mk_input_label_pattern(edge_type_properties_key_names.label,set_input_as.label,"label")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.agent,set_input_as.agent,"agent")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.from_outcomes,set_input_as.from_outcomes,"from outcomes")}
+    
+    ${mk_input_label_pattern(edge_type_properties_key_names.quality_power,set_input_as.quality_power,"quality power")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.duration_power,set_input_as.duration_power,"duration power")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.cost_power,set_input_as.cost_power,"cost power")}
+    
+    ${mk_input_label_pattern(edge_type_properties_key_names.delay,set_input_as.delay,"delay")}
     `;
 }
 
 
-function mk_produces_properties() {
+function mk_limits_properties(seo) {
+    const set_input_as = {
+        label: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.label),
+        agent: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.agent),
+        from_outcomes: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.from_outcomes),
+        quality_power: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.quality_power),
+        duration_power: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.duration_power),
+        cost_power: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.cost_power),
+        delay: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.delay),
+    };
     return `
-    <label> Name: </label>
-    <input type="text" name="label">
-    <br>
-    <label> Agent: </label>
-    <input type="text" name="agent">
-    <label> From Outcomes: </label>
-    <br>
-    <input type="text" name="from_outcome">
-    <br>
-    <label> Model: </label>
-    <input type="text" name="model">
-    <br>
-    <label> Produces: </label>
-    <input type="text" name="produces">
+    ${mk_input_label_pattern(edge_type_properties_key_names.label,set_input_as.label,"label")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.agent,set_input_as.agent,"agent")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.from_outcomes,set_input_as.from_outcomes,"from outcomes")}
+    
+    ${mk_input_label_pattern(edge_type_properties_key_names.quality_power,set_input_as.quality_power,"quality power")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.duration_power,set_input_as.duration_power,"duration power")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.cost_power,set_input_as.cost_power,"cost power")}
+    
+    ${mk_input_label_pattern(edge_type_properties_key_names.delay,set_input_as.delay,"delay")}
+    `;
+}
+
+
+function mk_produces_properties(seo) {
+    const set_input_as = {
+        label: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.label),
+        agent: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.agent),
+        from_outcomes: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.from_outcomes),
+        model: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.model),
+        produces: sno_value_to_html_input_tag(seo,"obj",edge_type_properties_key_names.produces),
+    };
+    return `
+    ${mk_input_label_pattern(edge_type_properties_key_names.label,set_input_as.label,"label")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.agent,set_input_as.agent,"agent")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.from_outcomes,set_input_as.from_outcomes,"from_outcomes")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.model,set_input_as.model,"model")}
+    ${mk_input_label_pattern(edge_type_properties_key_names.produces,set_input_as.produces,"produces")}
     `;
 }
 
@@ -231,31 +231,32 @@ function mk_produces_properties() {
 function build_edge_type_properties_dialog(
     from_dialog_id_str,
     selected_type_str,
+    selected_edge_object=null
 ) {
     // get and empty out the properties dialog
     const propertiesDiv = $(from_dialog_id_str);
     propertiesDiv.empty();
     switch (selected_type_str) {
         case edge_types.consumes:
-            propertiesDiv.append(mk_consume_properties());
+            propertiesDiv.append(mk_consume_properties(selected_edge_object));
             break;
         case edge_types.enables:
-            propertiesDiv.append(mk_enables_properties());
+            propertiesDiv.append(mk_enables_properties(selected_edge_object));
             break;
         case edge_types.disables:
-            propertiesDiv.append(mk_disables_properties());
+            propertiesDiv.append(mk_disables_properties(selected_edge_object));
             break;
         case edge_types.facilitates:
-            propertiesDiv.append(mk_facilitates_properties());
+            propertiesDiv.append(mk_facilitates_properties(selected_edge_object));
             break;
         case edge_types.hinders:
-            propertiesDiv.append(mk_hinders_properties());
+            propertiesDiv.append(mk_hinders_properties(selected_edge_object));
             break;
         case edge_types.limits:
-            propertiesDiv.append(mk_limits_properties());
+            propertiesDiv.append(mk_limits_properties(selected_edge_object));
             break;
         case edge_types.produces:
-            propertiesDiv.append(mk_produces_properties());
+            propertiesDiv.append(mk_produces_properties(selected_edge_object));
             break;
         case 'none':
             break;
