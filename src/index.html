@@ -298,29 +298,38 @@
     <div class="node-dialog-content">
         <form id="edit-edge-dialog-input-form" onsubmit="" autocomplete="off">
 
-            <label for="edit_edge_available">Edge: </label>
-            <select id="edit_edge_available" name="edit_edge_available">
-                <!-- filled from java script-->
-            </select>
-
-            <br>
-            <label for="edit_edge_type">Type: </label>
-            <select id="edit_edge_type" name="edit_edge_type">
-                <option value="none">none</option>
-                <option value="Consumes">Consumes</option>
-                <option value="Enables">Enables</option>
-                <option value="Disables">Disables</option>
-                <option value="Facilitates">Facilitates</option>
-                <option value="Hinders">Hinders</option>
-                <option value="Limits">Limits</option>
-                <option value="Produces">Produces</option>
-            </select>
-            <br>
+            <div class="form-group row text-center node-dialog-form-padding">
+                <label class=" col-3 col-form-label col-from-label-sm font-weight-bold" for="edit_edge_available">edge</label>
+                <div class="col">
+                    <select class="custom-select custom-select-sm text-center" id="edit_edge_available" name="id">
+                        <!-- filled from java script-->
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row text-center node-dialog-form-padding">
+                <label class="col-3 col-form-label col-from-label-sm font-weight-bold" for="edit_edge_type">type</label>
+                <div class="col">
+                    <select class="custom-select custom-select-sm text-center" id="edit_edge_type" name="type">
+                        <option value="none">none</option>
+                        <option value="Consumes">Consumes</option>
+                        <option value="Enables">Enables</option>
+                        <option value="Disables">Disables</option>
+                        <option value="Facilitates">Facilitates</option>
+                        <option value="Hinders">Hinders</option>
+                        <option value="Limits">Limits</option>
+                        <option value="Produces">Produces</option>
+                    </select>
+                </div>
+            </div>
             <div id="edit-edge-type-properties">
                 <!-- filled from java script-->
             </div>
+            <div class="form-group row d-flex justify-content-center" style="margin-bottom: 0;">
+                <div class="col-auto">
+                    <input type="submit" value="Submit" class="btn btn-primary">
+                </div>
+            </div>
 
-            <input type="submit" value="Submit">
         </form>
     </div>
 </div>

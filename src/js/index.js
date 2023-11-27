@@ -174,20 +174,20 @@ const nodes = new vis.DataSet([
         },
         shape: "box"
     },
-    {
-        id: "node-1",
-        label: "node-1",
-        obj: {
-            label: "node-1",
-            type: "Task",
-            agent: "foobar",
-            qaf: "q_max",
-            arrival_time: "",
-            earliest_start_time: "",
-            deadline: ""
-        },
-        shape: "ellipse"
-    }
+    // {
+    //     id: "node-1",
+    //     label: "node-1",
+    //     obj: {
+    //         label: "node-1",
+    //         type: "Task",
+    //         agent: "foobar",
+    //         qaf: "q_max",
+    //         arrival_time: "",
+    //         earliest_start_time: "",
+    //         deadline: ""
+    //     },
+    //     shape: "ellipse"
+    // }
 ]);
 
 
@@ -198,16 +198,19 @@ const nodes = new vis.DataSet([
 // });
 
 const edges = new vis.DataSet([
-    {
-        from: "node-0",
-        to: "node-1",
-        arrows: "to",
-        label: "text",
-        color: {
-            color: "blue"
-        },
-        id: "4cb0e914-85b7-4fb8-8cd8-931d08374c6c"
-    }
+    // {
+    //     from: "node-0",
+    //     to: "node-1",
+    //     arrows: "to",
+    //     label: "text",
+    //     color: {
+    //         color: "blue"
+    //     },
+    //     obj: {
+    //         label:"foobar",
+    //     },
+    //     id: "4cb0e914-85b7-4fb8-8cd8-931d08374c6c"
+    // }
 ]);
 
 // edges.on('*', function (event, properties, senderId) {
