@@ -10,7 +10,7 @@ const node_types = {
     task_group:'Task_Group',
     task_group_shape:'box',
     task:'Task',
-    task_shape:'ellipse',
+    task_shape:'box',
     method:'Method',
     method_shape:'ellipse',
     consumable_resource:'Consumable_Resource',
@@ -31,13 +31,13 @@ const edge_types = {
 
 let network = null;
 
-function startNetwork(data) {
-    const container = document.getElementById("network-view");
+
+function  mk_network_options(physics_on=true) {
     // https://visjs.github.io/vis-network/docs/network/layout.html#
-    const options = {
+    return {
         layout: {
             hierarchical: {
-                enabled: true,
+                enabled: physics_on,
                 levelSeparation: 150,
                 nodeSpacing: 100,
                 treeSpacing: 400,
@@ -49,8 +49,13 @@ function startNetwork(data) {
             }
         }, // physics: false
         physics: {
+            enabled: physics_on,
             hierarchicalRepulsion: {
-                centralGravity: 0.0, springLength: 200, springConstant: 0.01, nodeDistance: 120, damping: 0.09
+                centralGravity: 0.0,
+                springLength: 200,
+                springConstant: 0.01,
+                nodeDistance: 120,
+                damping: 0.09
             }
         },
         nodes: {
@@ -62,7 +67,13 @@ function startNetwork(data) {
             smooth: false,
         }
     };
-    network = new vis.Network(container, data, options);
+}
+
+
+function startNetwork(data) {
+    const container = document.getElementById("network-view");
+
+    network = new vis.Network(container, data, mk_network_options());
 
     // network.on("click", function (params) {
     //     if (params.nodes.length) {
@@ -74,10 +85,11 @@ function startNetwork(data) {
 
     network.on("stabilized", function (params) {
         if (params.iterations > 0) {
-            // console.log("The network is stabilized after " + params.iterations + " iterations");
+            console.log("The network is stabilized after " + params.iterations + " iterations");
             // Disable physics after initial stabilization
             network.setOptions({physics: false});
-            network.setOptions({layout: {hierarchical: {enabled: false}}});
+            // network.setOptions({layout: {hierarchical: {enabled: false}}});
+            network.setOptions(mk_network_options(false))
         }
     })
     network.on("oncontext", function (params) {
@@ -108,8 +120,13 @@ function startNetwork(data) {
 
     //TODO: add node label
     function add_qaf_label(ctx) {
+
         const node_positions = network.getPositions();
         Object.keys(node_positions).forEach(nodeId => {
+            const current_node_object = nodes.get(nodeId);
+            if (current_node_object.obj.qaf) {
+                console.log(current_node_object.obj.qaf)
+            }
             const position = node_positions[nodeId];
             const y_offset = 20;
             let text =  "Hello World";
@@ -117,10 +134,12 @@ function startNetwork(data) {
             const textMetrics = ctx.measureText(text);
             const textWidth = textMetrics.width;
             ctx.font = "8px Courier New";
-            ctx.fillStyle = '#1bd205';
+            ctx.fillStyle = 'rgba(150,192,251,0.56)';
             ctx.fillText(text2, position.x-(textWidth/3),position.y+y_offset);
             ctx.fillStyle = '#0c0909';
             ctx.fillText(text, position.x-(textWidth/3),position.y+y_offset);
+
+
         });
     }
     function drawCustomEdgeLabels(ctx) {
@@ -154,7 +173,7 @@ function startNetwork(data) {
     }
 
     // network.on("afterDrawing", function (ctx) {
-    //     // add_qaf_label(ctx);
+    //     add_qaf_label(ctx);
     //     // drawCustomEdgeLabels(ctx);
     // });
 
@@ -228,8 +247,6 @@ startNetwork({nodes: nodesView, edges: edgesView});
 
 // buttons for the network
 
-
-
 // upload json file btn
 const upload_network_json_file = document.getElementById('upload-network-json-file');
 upload_network_json_file.addEventListener('change', (event) => {
@@ -255,7 +272,7 @@ upload_network_json_file.addEventListener('change', (event) => {
         nodes.clear();
         edges.clear();
         json = JSON.parse(e.target.result);
-        console.log(json);
+        // console.log(json);
         // load the nodes to the network
         for (node of json.nodes) {
             nodes.add(load_node_from_json(node));
@@ -264,7 +281,8 @@ upload_network_json_file.addEventListener('change', (event) => {
         for (edge of json.links) {
             edges.add(load_edge_from_json(edge));
         }
-
+        refresh_nodes_types();
+        network.setOptions(mk_network_options())
     };
     reader.readAsText(file);
 })
@@ -290,24 +308,8 @@ function save_network_btn() {
 
 // turn the physics back on to realign network
 function toggle_physics_btn() {
-    network.setOptions({physics: {enabled: true}})
-    network.setOptions({
-        layout: {
-            hierarchical: {
-                enabled: true,
-                levelSeparation: 150,
-                nodeSpacing: 100,
-                treeSpacing: 400,
-                blockShifting: false,
-                edgeMinimization: false,
-                parentCentralization: true,
-                direction: 'UD',        // UD, DU, LR, RL
-                sortMethod: 'directed',  // hubsize, directed
-            }
-        }
-    });
+    network.setOptions(mk_network_options())
 }
-
 
 function refresh_nodes_types() {
     nodes.forEach(node => {
