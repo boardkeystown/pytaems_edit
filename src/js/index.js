@@ -118,28 +118,26 @@ function startNetwork(data) {
         }
     })
 
-    //TODO: add node label
     function add_qaf_label(ctx) {
-
         const node_positions = network.getPositions();
         Object.keys(node_positions).forEach(nodeId => {
             const current_node_object = nodes.get(nodeId);
-            if (current_node_object.obj.qaf) {
-                console.log(current_node_object.obj.qaf)
-            }
+            let text =  "hello world";
+            let text2 = "███████████";
             const position = node_positions[nodeId];
             const y_offset = 20;
-            let text =  "Hello World";
-            let text2 = "███████████";
-            const textMetrics = ctx.measureText(text);
-            const textWidth = textMetrics.width;
-            ctx.font = "8px Courier New";
-            ctx.fillStyle = 'rgba(150,192,251,0.56)';
-            ctx.fillText(text2, position.x-(textWidth/3),position.y+y_offset);
-            ctx.fillStyle = '#0c0909';
-            ctx.fillText(text, position.x-(textWidth/3),position.y+y_offset);
 
-
+            if (current_node_object.obj && current_node_object.obj.qaf) {
+                text = current_node_object.obj.qaf;
+                text2 = '█'.repeat(text.length);
+                const textMetrics = ctx.measureText(text);
+                const textWidth = textMetrics.width;
+                ctx.font = "8px Courier New";
+                ctx.fillStyle = 'rgba(150,192,251,0.56)';
+                ctx.fillText(text2, position.x-(textWidth/3),position.y+y_offset);
+                ctx.fillStyle = '#0c0909';
+                ctx.fillText(text, position.x-(textWidth/3),position.y+y_offset);
+            }
         });
     }
     function drawCustomEdgeLabels(ctx) {
@@ -149,11 +147,9 @@ function startNetwork(data) {
             if (edge.connected) {
                 const fromNode = edge.from;
                 const toNode = edge.to;
-
                 // Calculate midpoint of the edge
                 const midX = (fromNode.x + toNode.x) / 2;
                 const midY = (fromNode.y + toNode.y) / 2;
-
                 // Draw a shape or image as background
                 // Example: Draw a circle
                 ctx.beginPath();
@@ -172,11 +168,9 @@ function startNetwork(data) {
         }
     }
 
-    // network.on("afterDrawing", function (ctx) {
-    //     add_qaf_label(ctx);
-    //     // drawCustomEdgeLabels(ctx);
-    // });
-
+    network.on("afterDrawing", function (ctx) {
+        add_qaf_label(ctx);
+    });
 
 }
 
@@ -196,20 +190,6 @@ const nodes = new vis.DataSet([
         },
         shape: "box"
     },
-    // {
-    //     id: "node-1",
-    //     label: "node-1",
-    //     obj: {
-    //         label: "node-1",
-    //         type: "Task",
-    //         agent: "foobar",
-    //         qaf: "q_max",
-    //         arrival_time: "",
-    //         earliest_start_time: "",
-    //         deadline: ""
-    //     },
-    //     shape: "ellipse"
-    // }
 ]);
 
 
@@ -247,6 +227,39 @@ startNetwork({nodes: nodesView, edges: edgesView});
 
 // buttons for the network
 
+
+
+function edge_type_label_rename(type,label) {
+    let result = "";
+    switch (type) {
+        case 'Consumes':
+            result = "(C) " + label;
+            break;
+        case 'Enables':
+            result = "(E) " + label;
+            break;
+        case 'Disables':
+            result = "(D) " + label;
+            break;
+        case 'Facilitates':
+            result = "(F) " + label;
+            break;
+        case 'Hinders':
+            result = "(H) " + label;
+            break;
+        case 'Limits':
+            result = "(L) " + label;
+            break;
+        case 'Produces':
+            result = "(P) " + label;
+            break;
+        default:
+            result = label;
+    }
+    return result;
+}
+
+
 // upload json file btn
 const upload_network_json_file = document.getElementById('upload-network-json-file');
 upload_network_json_file.addEventListener('change', (event) => {
@@ -263,6 +276,7 @@ upload_network_json_file.addEventListener('change', (event) => {
             to: edge.target,
             arrows: "to",
             obj: (edge.obj) ? edge.obj : {},
+            label: (edge.obj) ? edge_type_label_rename(edge.obj.type, edge.obj.label) : "",
         };
     }
     const file = event.target.files[0];
@@ -320,7 +334,7 @@ function refresh_nodes_types() {
             case node_types.task:
                 node.shape = node_types.task_shape;
                 break;
-            case node_types.method_shape:
+            case node_types.method:
                 node.shape = node_types.method_shape;
                 break;
             case node_types.consumable_resource:

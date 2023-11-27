@@ -30,37 +30,6 @@ function editEdgeBtn() {
 
 }
 
-function edge_type_label_rename(type,label) {
-    let result;
-    switch (type) {
-        case 'Consumes':
-            result = "(C) " + label;
-            break;
-        case 'Enables':
-            result = "(E) " + label;
-            break;
-        case 'Disables':
-            result = "(D) " + label;
-            break;
-        case 'Facilitates':
-            result = "(F) " + label;
-            break;
-        case 'Hinders':
-            result = "(H) " + label;
-            break;
-        case 'Limits':
-            result = "(L) " + label;
-            break;
-        case 'Produces':
-            result = "(P) " + label;
-            break;
-        default:
-            result = label;
-    }
-    return result;
-}
-
-
 const editEdgeProperties = document.getElementById("edit-edge-dialog-input-form");
 editEdgeProperties.addEventListener("submit",function (e) {
     e.preventDefault();
