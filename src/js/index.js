@@ -45,7 +45,7 @@ function startNetwork(data) {
                 edgeMinimization: false,
                 parentCentralization: true,
                 direction: 'UD',        // UD, DU, LR, RL
-                sortMethod: 'hubsize',  // hubsize, directed
+                sortMethod: 'directed',  // hubsize, directed
             }
         }, // physics: false
         physics: {
@@ -57,6 +57,9 @@ function startNetwork(data) {
             font: {
                 multi: "html", // Enable multi-font options"
             }
+        },
+        edges: {
+            smooth: false,
         }
     };
     network = new vis.Network(container, data, options);
@@ -225,16 +228,43 @@ startNetwork({nodes: nodesView, edges: edgesView});
 
 // buttons for the network
 
+
+
 // upload json file btn
 const upload_network_json_file = document.getElementById('upload-network-json-file');
 upload_network_json_file.addEventListener('change', (event) => {
+    function load_node_from_json(node) {
+        return {
+            id: node.id,
+            label: node.id,
+            obj: node.obj
+        };
+    }
+    function load_edge_from_json(edge) {
+        return {
+            from: edge.source,
+            to: edge.target,
+            arrows: "to",
+            obj: (edge.obj) ? edge.obj : {},
+        };
+    }
     const file = event.target.files[0];
     const reader = new FileReader();
     let json = {}
     reader.onload = function (e) {
+        nodes.clear();
+        edges.clear();
         json = JSON.parse(e.target.result);
-        //TODO: load up the nodes and edges
         console.log(json);
+        // load the nodes to the network
+        for (node of json.nodes) {
+            nodes.add(load_node_from_json(node));
+        }
+        // load the edges to the network
+        for (edge of json.links) {
+            edges.add(load_edge_from_json(edge));
+        }
+
     };
     reader.readAsText(file);
 })
@@ -272,7 +302,7 @@ function toggle_physics_btn() {
                 edgeMinimization: false,
                 parentCentralization: true,
                 direction: 'UD',        // UD, DU, LR, RL
-                sortMethod: 'hubsize',  // hubsize, directed
+                sortMethod: 'directed',  // hubsize, directed
             }
         }
     });
