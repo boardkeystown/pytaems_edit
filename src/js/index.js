@@ -305,7 +305,20 @@ upload_network_json_file.addEventListener('change', (event) => {
 function save_network_btn() {
     console.log(nodes)
     const networdXData = {
-        directed: true, multigraph: true, graph: {}, nodes: nodes.get(), links: edges.get()
+        directed: true,
+        multigraph: true,
+        graph: {},
+        nodes: nodes.get(),
+        links: edges.get().map(edge => {
+            return {
+              source: edge.from,
+              target: edge.to,
+              obj: (edge.obj) ? edge.obj : {},
+              key: 0,
+            };
+        })
+
+        // links: edges.get()
     };
     const json = JSON.stringify(networdXData, null, 4);
     console.log(json);
