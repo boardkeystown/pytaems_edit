@@ -1,6 +1,8 @@
 #network-view {
-    width: 600px;
-    height: 450px;
+    /*width: 600px;*/
+    /*height: 450px;*/
+    width: 95vw;
+    height: 80vh;
     border: 1px solid lightgray;
     background-color: whitesmoke;
 }
