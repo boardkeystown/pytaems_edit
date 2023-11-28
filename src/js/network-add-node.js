@@ -54,8 +54,8 @@ addNewNode.addEventListener("submit", function (e) {
             id: new_node_data.new_node_name,
             label: new_node_data.new_node_name,
             obj: {
+                ...new_node_data.obj,
                 label: new_node_data.new_node_name,
-                ...new_node_data.obj
             },
     };
     nodes.add(new_node_object);
