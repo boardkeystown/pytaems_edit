@@ -115,9 +115,6 @@
 }
 
 
-
-
-
 #add-node-dialog {
     display: none;
 }
@@ -130,14 +127,35 @@
 #connect-node-dialog {
     display: none;
 }
-
 #remove-edge-dialog {
     display: none;
 }
-
 #edit-edge-dialog {
     display: none;
 }
+
+#edit-edit-outcome-dialog {
+    display: none;
+}
+#edit-add-outcome-dialog {
+    display: none;
+}
+#edit-remove-outcome-dialog {
+    display: none;
+}
+
+
+#add-edit-outcome-dialog {
+    display: none;
+}
+#add-add-outcome-dialog {
+    display: none;
+}
+#add-remove-outcome-dialog {
+    display: none;
+}
+
+
 
 /*#edit-edge-dialog {*/
 /*    display: none;*/

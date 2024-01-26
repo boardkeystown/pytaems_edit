@@ -27,6 +27,8 @@ function editEdgeBtn() {
         current_edge_type,
         edges.get(current_edge)
     )
+    console.log(edges.get(current_edge))
+    console.log(nodes.get(edges.get(current_edge).from))
 
 }
 
@@ -78,13 +80,11 @@ add_options_to_selection_drop_down(
     '0'
 );
 
-
 $(function () {
     $("#edit-edge-dialog").draggable();
     $("#close-edit-edge-dialog").on("click", (e) => {
         $("#edit-edge-dialog").toggle();
     });
-
     $("#edit_edge_type").on('change',(e) => {
         let selectedType = $("#edit_edge_type option:selected").val();
         build_edge_type_properties_dialog(
@@ -92,5 +92,4 @@ $(function () {
             selectedType,
             edges.get(current_edge));
     });
-
 });

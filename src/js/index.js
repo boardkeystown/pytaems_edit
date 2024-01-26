@@ -1,5 +1,12 @@
 let current_node = null;
+let current_outcome = null;
 let current_edge = null;
+let new_node_outcome = {
+    obj: {
+        outcomes: {}
+    }
+}
+
 
 const current_mouse_network_pos = {
     top: 0 + 'px', left: 0 + 'px'
@@ -64,7 +71,10 @@ function  mk_network_options(physics_on=true) {
             }
         },
         edges: {
-            smooth: false,
+            smooth: {
+                forceDirection: "vertical",
+                roundness: 0.5
+            }
         }
     };
 }
@@ -176,9 +186,79 @@ function startNetwork(data) {
 
 // set up nodes and edges
 const nodes = new vis.DataSet([
+    // {
+    //     id: "node-0",
+    //     label: "node-0",
+    //     obj: {
+    //         type: "Task_Group",
+    //         label: "node-0",
+    //         agent: null,
+    //         qaf: "q_sum_all",
+    //         arrival_time: null,
+    //         earliest_start_time: null,
+    //         deadline: null
+    //     },
+    //     shape: "box"
+    // },
+
+    // {
+    //     obj: {
+    //         type: "Method",
+    //         label: "spin-fast",
+    //         agent: "washer",
+    //         outcomes: {
+    //             c_2_H_o0: {
+    //                 label: "c_2_H_o0",
+    //                 density: [
+    //                     1.0
+    //                 ],
+    //                 quality_distribution: [
+    //                     20.0,
+    //                     1.0
+    //                 ],
+    //                 duration_distribution: [
+    //                     10.45,
+    //                     1.0
+    //                 ],
+    //                 cost_distribution: [
+    //                     5.0,
+    //                     1.0
+    //                 ]
+    //             },
+    //             other: {
+    //                 label: "other",
+    //                 density: [
+    //                     1.0
+    //                 ],
+    //                 quality_distribution: [
+    //                     20.0,
+    //                     1.0
+    //                 ],
+    //                 duration_distribution: [
+    //                     10.0,
+    //                     1.0
+    //                 ],
+    //                 cost_distribution: [
+    //                     5.0,
+    //                     1.0
+    //                 ]
+    //             },
+    //         },
+    //         arrival_time: 123,
+    //         earliest_start_time: null,
+    //         deadline: null,
+    //         start_time: null,
+    //         finish_time: null,
+    //         accrued_time: null,
+    //         nonlocal_flag: null
+    //     },
+    //     label: "spin-fast",
+    //     id: "spin-fast"
+    // }
+
     {
-        id: "node-0",
-        label: "node-0",
+        id: "node-1",
+        label: "node-1",
         obj: {
             type: "Task_Group",
             label: "node-0",
@@ -212,7 +292,20 @@ const edges = new vis.DataSet([
     //         label:"foobar",
     //     },
     //     id: "4cb0e914-85b7-4fb8-8cd8-931d08374c6c"
-    // }
+    // },
+    // {
+    //     from: "node-1",
+    //     to: "node-0",
+    //     arrows: "to",
+    //     label: "text",
+    //     color: {
+    //         color: "blue"
+    //     },
+    //     obj: {
+    //         label:"foobar",
+    //     },
+    //     id: "4cb0e914-85b7-4fb8-8cd8-12312312333"
+    // },
 ]);
 
 // edges.on('*', function (event, properties, senderId) {
@@ -226,9 +319,6 @@ refresh_nodes_types();
 startNetwork({nodes: nodesView, edges: edgesView});
 
 // buttons for the network
-
-
-
 function edge_type_label_rename(type,label) {
     let result = "";
     switch (type) {

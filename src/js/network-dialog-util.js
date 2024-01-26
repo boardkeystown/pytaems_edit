@@ -271,6 +271,7 @@ function build_edge_type_properties_dialog(
 const node_type_properties_key_names = {
     agent: "agent",
     qaf: "qaf",
+    outcomes: "outcomes",
     arrival_time: "arrival_time",
     earliest_start_time: "earliest_start_time",
     deadline: "deadline",
@@ -281,7 +282,6 @@ const node_type_properties_key_names = {
     state: "state",
     depleted_at: "depleted_at",
     overloaded_at: "overloaded_at",
-
 };
 
 const qaf_type_properties_key_names = {
@@ -330,6 +330,63 @@ function mk_qaf_drop_down_options(sno) {
     `;
 }
 
+
+/* outcomes dialog properties */
+
+const outcomes_type_properties_key_names = {
+    label: "label",
+    density: "density",
+    quality_distribution: "quality_distribution",
+    duration_distribution: "duration_distribution",
+    cost_distribution: "cost_distribution"
+};
+
+
+
+function mk_outcomes_properties(sno,selected_outcome) {
+    let selected_outcome_properties = null;
+
+    if (sno && sno.hasOwnProperty('obj') && sno.obj.hasOwnProperty('outcomes')) {
+        selected_outcome_properties = sno.obj.outcomes[selected_outcome];
+    }
+    let set_input_as = {
+        label: '',
+        density: '',
+        quality_distribution: '',
+        duration_distribution: '',
+        cost_distribution: '',
+    }
+    if (selected_outcome_properties !== null && typeof selected_outcome_properties !== 'undefined') {
+        set_input_as.label = "value=" + selected_outcome_properties.label;
+        set_input_as.density = "value=" + selected_outcome_properties.density;
+        set_input_as.quality_distribution = "value=" + selected_outcome_properties.quality_distribution.join(',');
+        set_input_as.duration_distribution = "value=" + selected_outcome_properties.duration_distribution.join(',');
+        set_input_as.cost_distribution = "value=" + selected_outcome_properties.cost_distribution.join(',');
+    }
+    return `
+         ${mk_input_label_pattern("label",set_input_as.label,"label")}
+         ${mk_input_float_label("density",set_input_as.density,"density")}
+         ${mk_input_label_spread_pattern("quality_distribution",set_input_as.quality_distribution,"quality_distribution")}
+         ${mk_input_label_spread_pattern("duration_distribution",set_input_as.duration_distribution,"duration_distribution")}
+         ${mk_input_label_spread_pattern("cost_distribution",set_input_as.cost_distribution,"cost_distribution")}
+    `
+}
+
+function build_outcomes_properties(
+    from_dialog_id_str,
+    selected_outcome = null,
+    selected_node_object=null
+) {
+    const propertiesDiv = $(from_dialog_id_str);
+    propertiesDiv.empty();
+    propertiesDiv.append(
+        mk_outcomes_properties(selected_node_object,selected_outcome)
+    );
+}
+
+
+
+
 /**
  * @param value
  * @returns {string} html input tag value or empty str
@@ -373,7 +430,6 @@ function sno_value_to_html_input_tag(sno,object_key,key,default_value=null) {
     );
 }
 
-
 function mk_input_label_pattern(input_name, set_input_as, label_name) {
     return `
     <div class="form-group row text-center node-dialog-form-padding">
@@ -386,6 +442,43 @@ function mk_input_label_pattern(input_name, set_input_as, label_name) {
                         ${set_input_as}
                         pattern="^\\w+(-\\w+)*$"
                 >
+            </div>                 
+    </div>
+    `;
+}
+
+function mk_input_label_spread_pattern(input_name, set_input_as, label_name) {
+    // as in a comma seperated list of flaots
+    return `
+    <div class="form-group row text-center node-dialog-form-padding">
+        <label class="col-5 col-form-label col-form-label-sm font-weight-bold"> ${label_name} </label>
+            <div class="col-7">
+                <input  
+                        class="form-control form-control"
+                        type="text" 
+                        name=${input_name}
+                        ${set_input_as}
+                        pattern="^\\d+(\\.\\d+)?(,\\s*\\d+(\\.\\d+)?)*$"
+                >
+            </div>                 
+    </div>
+    `;
+}
+
+function  mk_input_float_label(input_name, set_input_as, label_name) {
+    return `
+    <div class="form-group row text-center node-dialog-form-padding">
+        <label class="col-5 col-form-label col-form-label-sm font-weight-bold"> ${label_name} </label>
+            <div class="col-7">
+            <input
+                class="form-control form-control"
+                type="number"
+                name=${input_name}
+                ${set_input_as}
+                min="0.0"
+                max="1.0"
+                step="any"
+            >
             </div>                 
     </div>
     `;
@@ -405,6 +498,56 @@ function mk_input_number(input_name,set_input_as, label_name) {
         </div>                 
     </div>
     `;
+}
+
+function mk_outcomes_options(sno) {
+    let outcomes_list = [];
+    console.log(sno)
+    if (sno && sno.obj && sno.obj.outcomes) {
+        for (let key in sno.obj.outcomes) {
+            outcomes_list.push(
+                `<option value="${key}"> ${key} </option>`
+            );
+        }
+    }
+    return outcomes_list;
+}
+
+function mk_outcomes_dropdown(sno,method_type) {
+    let method_type_id = "outcome_selection";
+    let add_btn_id = "add_outcome";
+    let edit_brn_id = "edit_outcome";
+    let remove_brn_id = "remove_outcome";
+    switch (method_type) {
+        case "edit_dialog":
+            method_type_id += "_" + method_type;
+            add_btn_id += "_" + method_type;
+            edit_brn_id += "_" + method_type;
+            remove_brn_id += "_" + method_type;
+            break;
+        case "add_dialog":
+            method_type_id += "_" + method_type;
+            add_btn_id += "_" + method_type;
+            edit_brn_id += "_" + method_type;
+            remove_brn_id += "_" + method_type;
+            break;
+        default:
+            break;
+    };
+    let outcomes_list = mk_outcomes_options(sno);
+    return `
+        <div class="form-group row text-center node-dialog-form-padding">
+        <label class=" col-5 col-form-label font-weight-bold"> outcomes </label>
+            <div class="col-7">
+                <select class="custom-select text-center" id="${method_type_id}" name="outcomes">
+                    ${outcomes_list.join(' ')}
+                </select>
+                <button type="button" class="btn-sm btn-success" id="${add_btn_id}">Add</button>
+                <button type="button" class="btn-sm btn-primary" id="${edit_brn_id}">Edit</button>
+                <button type="button" class="btn-sm btn-danger" id="${remove_brn_id}">Remove</button>
+            </div>
+        </div>
+    `
 }
 
 function mk_task_group_dialog_properties(sno) {
@@ -439,10 +582,10 @@ function mk_task_dialog_properties(sno) {
             `;
 }
 
-
-function mk_method_dialog_properties(sno) {
+function mk_method_dialog_properties(sno,method_type) {
     const set_input_as = {
         agent: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.agent),
+        outcomes: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.outcomes),
         arrival_time: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.arrival_time),
         earliest_start_time: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.earliest_start_time),
         deadline: sno_value_to_html_input_tag(sno,"obj",node_type_properties_key_names.deadline),
@@ -454,6 +597,7 @@ function mk_method_dialog_properties(sno) {
     return `
             ${mk_input_label_pattern(node_type_properties_key_names.agent,set_input_as.agent,"agent")}
             ${mk_input_number(node_type_properties_key_names.arrival_time,set_input_as.arrival_time, "arrival time")}
+            ${mk_outcomes_dropdown(sno,method_type)}
             ${mk_input_number(node_type_properties_key_names.earliest_start_time,set_input_as.earliest_start_time, "earliest start time")}
             ${mk_input_number(node_type_properties_key_names.deadline,set_input_as.deadline, "deadline")}
             ${mk_input_number(node_type_properties_key_names.start_time,set_input_as.start_time, "start time")}
@@ -509,6 +653,7 @@ function build_node_type_properties_dialog(
     form_dialog_id_str,
     selected_type_str,
     selected_node_object=null,
+    method_type = null,
 ) {
     // get and empty out the properties dialog
     const propertiesDiv = $(form_dialog_id_str);
@@ -522,7 +667,7 @@ function build_node_type_properties_dialog(
             propertiesDiv.append(mk_task_dialog_properties(selected_node_object));
             break;
         case node_types.method:
-            propertiesDiv.append(mk_method_dialog_properties(selected_node_object));
+            propertiesDiv.append(mk_method_dialog_properties(selected_node_object,method_type));
             break;
         case node_types.consumable_resource:
             propertiesDiv.append(mk_consumable_resource_dialog_properties(selected_node_object));

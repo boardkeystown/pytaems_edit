@@ -1,3 +1,4 @@
+// right click on current node
 function editNodeBtn() {
     console.log(`the current node is ${current_node}`)
     nodeContextMenu.style.display = 'none';
@@ -14,11 +15,9 @@ function editNodeBtn() {
     build_node_type_properties_dialog(
         "#edit-node-type-properties",
         editNodeProperties_type.value,
-        nodes.get(current_node)
+        nodes.get(current_node),
+        "edit_dialog"
     );
-
-
-
 }
 
 const editNodeProperties = document.getElementById("edit-node-dialog-input-form");
@@ -32,7 +31,6 @@ editNodeProperties.addEventListener('submit', function (e) {
 
         },
     };
-
     for (let pair of formData.entries()) {
         let key = pair[0];
         let value = pair[1];
@@ -40,8 +38,13 @@ editNodeProperties.addEventListener('submit', function (e) {
             case 'edit_node_name':
                 new_node_properties_options.new_name = value;
                 break;
+            case 'outcomes':
+                // copy over outcomes if type is method with outcomes
+                new_node_properties_options.obj.outcomes = {};
+                new_node_properties_options.obj.outcomes = { ...nodes.get(current_node).obj.outcomes};
+                break;
             default:
-                console.log(`${key}  - ${value} `)
+                console.log(`${key}  - ${value} `);
                 new_node_properties_options.obj[key] =
                     (value === '' || value === undefined  ) ?
                         null : value;
@@ -51,12 +54,16 @@ editNodeProperties.addEventListener('submit', function (e) {
 
     const current_node_properties = nodes.get(current_node);
     const new_node_properties = nodes.get(current_node);
+    let old_pos = network.getPositions([current_node])[current_node];
+
     nodes.remove(current_node_properties);
     new_node_properties.id = new_node_properties_options.new_name;
     new_node_properties.label = new_node_properties_options.new_name;
     new_node_properties.obj = new_node_properties_options.obj;
     new_node_properties.obj.label = new_node_properties_options.new_name;
 
+    new_node_properties.x = old_pos.x;
+    new_node_properties.y = old_pos.y;
     nodes.add(new_node_properties);
 
     edges.forEach(edge => {
@@ -74,9 +81,6 @@ editNodeProperties.addEventListener('submit', function (e) {
 });
 
 
-
-
-
 $(function () {
     $("#edit-node-dialog").draggable();
     $("#close-edit-node-dialog").on("click", (e) => {
@@ -87,6 +91,8 @@ $(function () {
         build_node_type_properties_dialog(
             "#edit-node-type-properties",
             selectedType,
-            nodes.get(current_node));
+            nodes.get(current_node),
+            "edit_dialog"
+        );
     });
 })

@@ -17,6 +17,8 @@ function addNodeBtn() {
     build_node_type_properties_dialog(
         "#add-node-type-properties",
         newNodeProperties_type.value,
+        null,
+        "edit_dialog"
     );
 
 }
@@ -46,8 +48,13 @@ addNewNode.addEventListener("submit", function (e) {
             case 'new_node_available_nodes':
                 new_node_data.parent_id = value;
                 break;
+            case 'outcomes':
+                // we have outcomes to add to the new node
+                new_node_data.obj.outcomes = new_node_outcome.obj.outcomes;
+                break;
             default:
                 new_node_data.obj[key]=value;
+                break;
         }
     }
     const new_node_object ={
@@ -58,6 +65,7 @@ addNewNode.addEventListener("submit", function (e) {
                 label: new_node_data.new_node_name,
             },
     };
+
     nodes.add(new_node_object);
     if (new_node_data.relation === 'to') {
         edges.add({
@@ -79,24 +87,33 @@ addNewNode.addEventListener("submit", function (e) {
     refresh_nodes_types();
     addNewNode.reset();
     $("#add-node-dialog").toggle()
+    // nuke the temp outcomes when done
+    new_node_outcome.obj.outcomes = {}
+    console.log(new_node_data)
 })
 
 
 const add_node_drop_down_options = document.getElementById("new_node_available_nodes");
-add_options_to_selection_drop_down(add_node_drop_down_options,
-                                           default_available_nodes_dropdown_options,
-                                                 '0')
+add_options_to_selection_drop_down(
+    add_node_drop_down_options,
+    default_available_nodes_dropdown_options,
+    '0'
+);
 
 $(function () {
     $("#add-node-dialog").draggable();
     $("#close-add-node-dialog").on("click", (e) => {
         $("#add-node-dialog").toggle();
+        // nuke the temp outcomes when done
+        new_node_outcome.obj.outcomes = {}
     });
     $("#new_node_type").on('change',(e) => {
        let selectedType = $("#new_node_type option:selected").val();
        build_node_type_properties_dialog(
            "#add-node-type-properties",
-           selectedType
+           selectedType,
+           null,
+           "add_dialog"
        );
     });
 

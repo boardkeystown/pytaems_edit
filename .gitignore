@@ -1,3 +1,4 @@
 .idea
 *.json
-
+src/js/test.js
+src/test.html
