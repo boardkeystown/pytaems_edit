@@ -73,6 +73,46 @@ function show_dialog_at(dialog_id_name_str, top_px_str, left_px_str) {
 
 /*  edge type dialog properties  */
 
+function  mk_outcomes_options_filter(sno,current_outcome) {
+    // if the current_outcomes is in the list of outcomes from the node
+    // we add it as the default selection, otherwise the default is none.
+    let outcomes_list = [];
+    let isInList = false;
+    if (sno && sno.obj && sno.obj.outcomes) {
+        for (let key in sno.obj.outcomes) {
+            if (key !== current_outcome) {
+                outcomes_list.push(key);
+            } else {
+                isInList = true;
+            }
+        }
+    }
+    if (isInList) {
+        outcomes_list.splice(0, 0, current_outcome);
+        outcomes_list.push('none');
+    } else {
+        outcomes_list.splice(0, 0, 'none');
+    }
+    outcomes_list = outcomes_list.map(key => {
+        return `<option value="${key}"> ${key} </option>`
+    });
+    return outcomes_list;
+}
+function mk_from_outcomes_label_dropdown(sno,current_outcome) {
+    let outcomes_list = mk_outcomes_options_filter(sno,current_outcome);
+    return `
+        <div class="form-group row text-center node-dialog-form-padding">
+        <label class=" col-5 col-form-label font-weight-bold"> from_outcomes </label>
+            <div class="col-7">
+                <select class="custom-select text-center" name="from_outcomes">
+                    ${outcomes_list.join(' ')}
+                </select>
+            </div>
+        </div>
+    `;
+}
+
+
 const edge_type_properties_key_names = {
     label: "label",
     agent: "agent",
@@ -113,7 +153,7 @@ function mk_enables_properties(seo) {
     return `
     ${mk_input_label_pattern(edge_type_properties_key_names.label,set_input_as.label,"label")}
     ${mk_input_label_pattern(edge_type_properties_key_names.agent,set_input_as.agent,"agent")}
-    ${mk_input_label_pattern(edge_type_properties_key_names.from_outcomes,set_input_as.from_outcomes,"from outcomes")}
+    ${mk_from_outcomes_label_dropdown(nodes.get(seo.from),seo.obj.from_outcomes)}
     ${mk_input_label_pattern(edge_type_properties_key_names.delay,set_input_as.delay,"delay")}
     `;
 }
@@ -458,11 +498,13 @@ function mk_input_label_spread_pattern(input_name, set_input_as, label_name) {
                         type="text" 
                         name=${input_name}
                         ${set_input_as}
-                        pattern="^\\d+(\\.\\d+)?(,\\s*\\d+(\\.\\d+)?)*$"
+                        
                 >
             </div>                 
     </div>
     `;
+    // TODO: fix the regex?
+    //pattern="^\d+(\.\d+)?(,\s*\d+(\.\d+)?)*$"
 }
 
 function  mk_input_float_label(input_name, set_input_as, label_name) {
@@ -502,7 +544,6 @@ function mk_input_number(input_name,set_input_as, label_name) {
 
 function mk_outcomes_options(sno) {
     let outcomes_list = [];
-    console.log(sno)
     if (sno && sno.obj && sno.obj.outcomes) {
         for (let key in sno.obj.outcomes) {
             outcomes_list.push(
@@ -682,22 +723,3 @@ function build_node_type_properties_dialog(
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

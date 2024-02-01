@@ -47,9 +47,10 @@ edit_add_outcomes_dialog.addEventListener('submit', function (e){
                 break;
         };
     }
-    // if you already have outcomes because you are already method
     let cur_code = nodes.get(current_node);
-
+    if (!cur_code.obj.hasOwnProperty('outcomes')) {
+        cur_code.obj.outcomes = {}
+    }
     cur_code.obj.outcomes[outcome_properties.label] = outcome_properties;
 
     // update dropdown

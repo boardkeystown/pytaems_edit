@@ -16,7 +16,6 @@ function editEdgeBtn() {
     if (edge_properties.obj && edge_properties.obj.type) {
         current_edge_type = edge_properties.obj.type;
     }
-    console.log("the edge type is set tooooO!")
     console.log(current_edge_type)
     console.log(edge_properties)
     $("#edit_edge_type").val('');
@@ -50,6 +49,10 @@ editEdgeProperties.addEventListener("submit",function (e) {
             case 'id':
                 edit_edge_properties_options.id = value;
                 break;
+            case 'from_outcomes':
+                if (value !== 'none') {
+                    edit_edge_properties_options.obj[key] = value;
+                }
             default:
                 // console.log(`${key} , ${value}`);
                 edit_edge_properties_options.obj[key] = value;
@@ -84,6 +87,34 @@ $(function () {
     $("#edit-edge-dialog").draggable();
     $("#close-edit-edge-dialog").on("click", (e) => {
         $("#edit-edge-dialog").toggle();
+    });
+
+    // repopulate the edge when you change the edge in the dialog
+    $("#edit_edge_available").on("change", (e) => {
+        let selectedEdge= $("#edit_edge_available").val();
+        current_edge = selectedEdge;
+        const edge_options = mk_edges_into_dropdown_options(edges);
+        add_options_to_selection_drop_down(
+            edit_edge_available_drop_down,
+            edge_options,
+            current_edge
+        );
+        // check the edge type to populate the dialog
+        const edge_properties = edges.get(current_edge);
+        let current_edge_type = 'none';
+        if (edge_properties.obj && edge_properties.obj.type) {
+            current_edge_type = edge_properties.obj.type;
+        }
+        console.log(current_edge_type)
+        console.log(edge_properties)
+        $("#edit_edge_type").val('');
+        $("#edit_edge_type").val(current_edge_type);
+
+        build_edge_type_properties_dialog(
+            "#edit-edge-type-properties",
+            current_edge_type,
+            edges.get(current_edge)
+        )
     });
     $("#edit_edge_type").on('change',(e) => {
         let selectedType = $("#edit_edge_type option:selected").val();

@@ -50,6 +50,7 @@ add_add_outcomes_dialog.addEventListener('submit', function (e){
 
     new_node_outcome.obj.outcomes[outcome_properties.label] = outcome_properties;
 
+
     // // if you already have outcomes because you are already method
     // let cur_code = nodes.get(current_node);
     //
