@@ -19,7 +19,7 @@ add_edit_outcomes_dialog.addEventListener('submit', function (e){
                 outcome_properties.label = value;
                 break;
             case 'density':
-                outcome_properties.density = value
+                outcome_properties.density = parseFloat(value+"")
                 break;
             case 'quality_distribution':
                 outcome_properties.quality_distribution = value.split(',').map((e) => {
